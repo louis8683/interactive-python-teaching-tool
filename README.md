@@ -2,7 +2,7 @@
 
 ## Welcome! This tool lets you execute a Python program with visualization of the **variable changes** and the **current line of execution**.
 
-### This is a teaching tool used to visualize how a Python program executes. We believe the visualization of program flow and the visualization of live variable changes can make it easier for new programmers to understand the concepts of programming.
+#### This is a teaching tool used to visualize how a Python program executes. We believe the visualization of program flow and the visualization of live variable changes can make it easier for new programmers to understand the concepts of programming.
 
 ## Features! (in the making)
 - Built in Python editor with syntax highlighting.
@@ -16,8 +16,8 @@
 
 ## What is this project built with?
 
-#### Since this is a project targeted for learning Python, we use as much Python as we could! Including QT with Python(for UI), execution tools(to interact with your OS), and other utilities... 
+#### Since this is a project targeted for learning Python, we use as much Python as we could! Including QT with Python (for UI), execution tools (to create the line-by-line details), and other utilities... 
 
 ## About the Author
 
-#### I'm a graduate student living in Taiwan, ROC who has some vision about learning programming and university level Computer Science. Coding can be extremely fun, but also extremely exhausting... I believe this tool can help beginners ascend beyond the frustration of learning programming much faster and with much more confidence!
+#### I'm a graduate student living in Taiwan (ROC) who has some vision about learning programming and learning Computer Science. Coding can be extremely fun, but also extremely exhausting... I believe this tool can help beginners swiftly ascend beyond the frustration of learning programming and go forward with much more confidence!
