@@ -15,7 +15,10 @@ class CC:
     
     def scream(self):
         print(self.name)
-
+    
+    class InnerCC:
+        def __init__(self):
+            print("shy...")
 
 li = []
 for i in range(10):
@@ -37,3 +40,8 @@ cc.scream()
 cc = CC()
 
 cc.scream()
+
+if 10 == 10:
+    print("Correct")
+else:
+    print("Incorrect")

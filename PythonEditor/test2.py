@@ -1,10 +1,8 @@
-import inspect
 from pprint import pprint
 from time import sleep
 
 pprint(f"Hello world! Yo Yo Yo")
-print("你好，世界！")
-
+print("你好，世界😀")
 def add(i, j):
     sum = i + j
     return sum
@@ -35,3 +33,12 @@ else:
 cc = CC()
 
 cc.scream()
+
+cc = CC()
+
+cc.scream()
+
+if 10 == 10:
+    print("Correct")
+else:
+    print("Incorrect")
