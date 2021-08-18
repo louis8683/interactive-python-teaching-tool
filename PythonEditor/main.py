@@ -1,11 +1,12 @@
 # This Python file uses the following encoding: utf-8
+from typing import Any
 from PySide6.QtGui import QFont, QFontDatabase, QPalette, QTextCursor, Qt
 from syntax_highlighter import PythonSyntaxHighlighter
 import subprocess
 from pathlib import Path
 import sys
 
-from PySide6.QtWidgets import QApplication, QFileDialog, QInputDialog, QMainWindow, QTableWidgetItem, QWidget, QPushButton
+from PySide6.QtWidgets import QApplication, QFileDialog, QInputDialog, QMainWindow, QTableWidget, QTableWidgetItem, QWidget, QPushButton
 from PySide6.QtCore import QDir, QFile, QTranslator, Slot
 
 from script.analyze_src_code import SourceCodeAnalyzer
@@ -19,7 +20,7 @@ class PythonEditor(QWidget):
         self.ui.setupUi(self)
 
         # Setup variables
-        self.python_path = "C:\\Python39\\python.exe"
+        self.python_path = "C:\\Python39\\python.exe" # C:\\Users\\Louis\\.conda\\envs\\glasses\\python.exe
         self.filename = ""
         self.highlighted_lines, self.last_highlighted_lines = [], []
 
@@ -128,7 +129,7 @@ class PythonEditor(QWidget):
             self.analyzer
         except AttributeError:
             # init variables
-            self.analyzer = SourceCodeAnalyzer(self.filename)
+            self.analyzer = SourceCodeAnalyzer(self.filename, python_path=self.python_path)
             self.action_no = 0
             self.highlighted_lines = []
             self.input_list = []
@@ -165,38 +166,51 @@ class PythonEditor(QWidget):
             else:
                 return False
 
+        # Extract action
+        line_no, events, record_no = self.analyzer.actions[self.action_no]
+
         # Highlight
         self.last_highlighted_lines = self.highlighted_lines
-        self.highlighted_lines = [self.analyzer.actions[self.action_no][0]]
+        self.highlighted_lines = [line_no]
         self.highlight_lines(self.highlighted_lines, self.last_highlighted_lines, line_no_start=self.analyzer.offset)
         
         # Update output for print()
-        if "print" in self.analyzer.actions[self.action_no][1]:
-            print_text = self.analyzer.actions[self.action_no][1]["print"]
+        if "print" in events:
+            print_text = events["print"]
             cursor = QTextCursor(self.ui.outputTextBrowser.document())
             cursor.movePosition(QTextCursor.End)
             cursor.insertText(print_text)
 
         # Update variables
-        record_no = self.analyzer.actions[self.action_no][2]
         vars = self.analyzer.get_variables(record_no)
         self.ui.globalVarTableWidget.setRowCount(len(vars["global"]))
         self.ui.globalVarTableWidget.setColumnCount(3)
         for i, var_name in enumerate(vars["global"]):
-            self.ui.globalVarTableWidget.setItem(i, 0, QTableWidgetItem(var_name))
-            self.ui.globalVarTableWidget.setItem(i, 1, QTableWidgetItem(str(vars["global"][var_name])))
-            self.ui.globalVarTableWidget.setItem(i, 2, QTableWidgetItem(str(type(vars["global"][var_name]))))
+            self.set_table_row(self.ui.globalVarTableWidget, i, var_name, vars["global"][var_name])
+            if ("g_added" in events and var_name in events["g_added"]) \
+                    or ("g_changed" in events and var_name in events["g_changed"]):
+                self.hightlight_row(self.ui.globalVarTableWidget, i)
         self.ui.localVarTableWidget.setRowCount(len(vars["local"]))
         self.ui.localVarTableWidget.setColumnCount(3)
         for i, var_name in enumerate(vars["local"]):
-            self.ui.localVarTableWidget.setItem(i, 0, QTableWidgetItem(var_name))
-            self.ui.localVarTableWidget.setItem(i, 1, QTableWidgetItem(str(vars["local"][var_name])))
-            self.ui.localVarTableWidget.setItem(i, 2, QTableWidgetItem(str(type(vars["local"][var_name]))))
+            self.set_table_row(self.ui.localVarTableWidget, i, var_name, vars["local"][var_name])
+            if ("l_added" in events and var_name in events["l_added"]) \
+                    or ("l_changed" in events and var_name in events["l_changed"]):
+                self.hightlight_row(self.ui.localVarTableWidget, i)
         
         # Increment action no
         self.action_no += 1
         
         return True
+
+    def set_table_row(self, table:QTableWidget, row, var_name:str, var_value:Any):
+        table.setItem(row, 0, QTableWidgetItem(var_name))
+        table.setItem(row, 1, QTableWidgetItem(str(var_value)))
+        table.setItem(row, 2, QTableWidgetItem(str(type(var_value))))
+    
+    def hightlight_row(self, table:QTableWidget, row, color=Qt.yellow):
+        for col in range(table.columnCount()):
+            table.item(row, col).setBackground(color)
 
     def highlight_lines(self, highlight: list[int], old_highlight: list[int], color=Qt.yellow, line_no_start=0):
         for line in set(highlight + old_highlight): # Only go through lines highlighted or previously highlighted

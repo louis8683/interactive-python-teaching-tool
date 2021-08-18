@@ -15,9 +15,10 @@ input_list_pickle_filename = "input.pickle"
 pickle_filename = "_temp.pickle"
 
 class SourceCodeAnalyzer:
-    def __init__(self, filename, line_no_start=1, input_list:list=[]):
+    def __init__(self, filename, line_no_start=1, input_list:list=[], python_path="python"):
         self.offset = line_no_start
         self.src_filename = filename
+        self.python_path = python_path
     
         # Load parser
         self.parser = scp.SourceCodeParser(self.src_filename)
@@ -45,7 +46,7 @@ class SourceCodeAnalyzer:
         # Execute rewritten file 
         # NOTE: better way to properly execute the rewritten file?
         generated_file_name = rewriter.generated_filename
-        os.system(f"python {generated_file_name}")
+        os.system(f"{self.python_path} {generated_file_name}")
 
         # Load the fvc from the generated pickle
         with open(pickle_filename, "rb") as file:
