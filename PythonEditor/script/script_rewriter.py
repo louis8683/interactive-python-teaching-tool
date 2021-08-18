@@ -58,15 +58,10 @@ class ScriptRewriter:
         self.lines.append(fvc.last_line)
 
     def temp_file_name_generator(self, original_filename, name_func=lambda name: f"_{name}_temp.py"):
-        return os.path.join(os.path.dirname(original_filename) ,name_func(os.path.basename(original_filename)))
+        return os.path.join(os.getcwd() ,name_func(os.path.basename(original_filename)))
 
     def _write_to_file(self, old_filename, name_func=lambda name: f"_{name}_temp.py"):
         new_name = self.temp_file_name_generator(old_filename, name_func) 
         with open(new_name, "w+", encoding="UTF-8") as file:
             file.writelines(self.lines[1:])
         return new_name
-
-if __name__ == "__main__":
-    target = "test2.py"
-    sr = ScriptRewriter(target)
-    sr.run()

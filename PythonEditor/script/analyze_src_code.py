@@ -11,6 +11,9 @@ from script.find_variable_changes import FindVariableChanges
 import script.source_code_parser as scp
 import script.script_rewriter as sr
 
+input_list_pickle_filename = "input.pickle"
+pickle_filename = "_temp.pickle"
+
 class SourceCodeAnalyzer:
     def __init__(self, filename, line_no_start=1, input_list:list=[]):
         self.offset = line_no_start
@@ -22,8 +25,10 @@ class SourceCodeAnalyzer:
         self.rerun(input_list)
     
     def rerun(self, input_list:list[str]=[]):
+        '''This function is isolated to provide interactivity when input() is used.
+        This function '''
         # Pickle the input_list
-        with open("input.pickle", "+wb") as file:
+        with open(input_list_pickle_filename, "+wb") as file:
             pickle.dump(input_list, file)
 
         # Mine data
@@ -32,7 +37,7 @@ class SourceCodeAnalyzer:
         # Analyze
         self.actions = self.analyze(self.fvc)
 
-    def extract_data_from_source_file(self, delete_intermediate_files=False) -> FindVariableChanges:
+    def extract_data_from_source_file(self, delete_intermediate_files=True) -> FindVariableChanges:
         # Rewrite file
         rewriter = sr.ScriptRewriter(self.src_filename)
         rewriter.run()
@@ -43,7 +48,6 @@ class SourceCodeAnalyzer:
         os.system(f"python {generated_file_name}")
 
         # Load the fvc from the generated pickle
-        pickle_filename = "_temp.pickle"
         with open(pickle_filename, "rb") as file:
             fvc = pickle.load(file)
         
@@ -51,6 +55,7 @@ class SourceCodeAnalyzer:
         if delete_intermediate_files:
             os.remove(generated_file_name)
             os.remove(pickle_filename)
+            os.remove(input_list_pickle_filename)
         
         return fvc
     
