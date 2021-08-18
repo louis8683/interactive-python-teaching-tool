@@ -4,6 +4,8 @@ import os
 import script.find_variable_changes as fvc
 import script.source_code_parser as scp
 
+# TODO: triple quote is not considered
+
 class ScriptRewriter:
     def __init__(self, sript_filename: str):
         self.lines: list[str] = [None] # use an empty index 0 to match the line number with index

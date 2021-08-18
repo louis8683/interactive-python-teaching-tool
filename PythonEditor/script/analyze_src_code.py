@@ -12,21 +12,27 @@ import script.source_code_parser as scp
 import script.script_rewriter as sr
 
 class SourceCodeAnalyzer:
-    def __init__(self, filename="", line_no_start=1):
+    def __init__(self, filename, line_no_start=1, input_list:list=[]):
         self.offset = line_no_start
-        if filename:
-            # Mine data
-            self.extract_data_from_source_file(filename)
-                        
-            # Load parser
-            self.parser = scp.SourceCodeParser(self.src_filename)
-
-            # Analyze
-            self.actions = self.analyze(self.fvc)
-
-    def extract_data_from_source_file(self, filename, delete_intermediate_files=False):
         self.src_filename = filename
+    
+        # Load parser
+        self.parser = scp.SourceCodeParser(self.src_filename)
         
+        self.rerun(input_list)
+    
+    def rerun(self, input_list:list[str]=[]):
+        # Pickle the input_list
+        with open("input.pickle", "+wb") as file:
+            pickle.dump(input_list, file)
+
+        # Mine data
+        self.fvc = self.extract_data_from_source_file()
+
+        # Analyze
+        self.actions = self.analyze(self.fvc)
+
+    def extract_data_from_source_file(self, delete_intermediate_files=False) -> FindVariableChanges:
         # Rewrite file
         rewriter = sr.ScriptRewriter(self.src_filename)
         rewriter.run()
@@ -37,31 +43,37 @@ class SourceCodeAnalyzer:
         os.system(f"python {generated_file_name}")
 
         # Load the fvc from the generated pickle
-        self.fvc: FindVariableChanges = None
         pickle_filename = "_temp.pickle"
         with open(pickle_filename, "rb") as file:
-            self.fvc = pickle.load(file)
+            fvc = pickle.load(file)
         
         # Delete rewritten file and pickle
         if delete_intermediate_files:
             os.remove(generated_file_name)
             os.remove(pickle_filename)
+        
+        return fvc
     
     def analyze(self, fvc: FindVariableChanges) -> list:
         # Parse records into action of each line
         actions: list[int,dict,int] = [] # (line_no, events, record_no)
         
         # Lambdas for quick access
-        g_deleted = lambda i: self.fvc.record[i]['diff']['global']['deleted']
-        g_added = lambda i: self.fvc.record[i]['diff']['global']['added']
-        g_changed = lambda i: self.fvc.record[i]['diff']['global']['changed']
-        l_deleted = lambda i: self.fvc.record[i]['diff']['local']['deleted']
-        l_added = lambda i: self.fvc.record[i]['diff']['local']['added']
-        l_changed = lambda i: self.fvc.record[i]['diff']['local']['changed']
+        g_deleted = lambda i: fvc.record[i]['diff']['global']['deleted']
+        g_added = lambda i: fvc.record[i]['diff']['global']['added']
+        g_changed = lambda i: fvc.record[i]['diff']['global']['changed']
+        l_deleted = lambda i: fvc.record[i]['diff']['local']['deleted']
+        l_added = lambda i: fvc.record[i]['diff']['local']['added']
+        l_changed = lambda i: fvc.record[i]['diff']['local']['changed']
         
         i = 1 # Ignore 0th line (command from fvc)
         line_max_seen = 0
         while i < len(fvc.record):
+
+            # Special Case: input()
+            if "status" in fvc.record[i] and fvc.record[i]["status"] == "need input":
+                actions.append(("need input", fvc.record[i]["input"]))
+                return actions
             
             # Case 1: function or class definition.
             # Pattern: line_no jumped forward to unseen line
@@ -105,12 +117,14 @@ class SourceCodeAnalyzer:
 
             # TODO: Case 4: for loop (ex: for i in range(10), the i is a variable)
 
-            # Case 5: print
+            # Case 5: print/input
             # only locate rear commands
             if fvc.record[i]['position'] == "end": # rear command
                 # Find print tag
                 if "print" in fvc.record[i]:
                     events["print"] = fvc.record[i]["print"]
+                if "input" in fvc.record[i]:
+                    events["input"] = fvc.record[i]["input"]
 
             # TODO: Case 6: input
                 
@@ -122,7 +136,7 @@ class SourceCodeAnalyzer:
             i += 1
         return actions
     
-    def get_variables(self, record_no: int, remove_dunder=True, remove_names=["inspect"]):
+    def get_variables(self, record_no: int, remove_dunder=True, remove_names=["inspect", "print", "input"]):
         g_vars = self.fvc.record[record_no]['frame'].f_globals
         l_vars = self.fvc.record[record_no]['frame'].f_locals
         if remove_dunder:

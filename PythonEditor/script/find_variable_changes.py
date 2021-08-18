@@ -7,6 +7,7 @@ import builtins
 from typing import Any
 import sys
 
+pickle_name = "_temp.pickle"
 # insert "[command]" into every line
 # search the output for our tag
 first_line = "import inspect; from script.find_variable_changes import FindVariableChanges as FVC; fvc = FVC(inspect.currentframe()); print = fvc.print; input = fvc.input;\n"
@@ -14,7 +15,7 @@ command_start = "fvc.update(inspect.currentframe(), 'start'); "
 command_end = "; fvc.update(inspect.currentframe(), 'end')"
 command_return = "fvc.update(inspect.currentframe(), 'return'); "
 command_empty = "fvc.update(inspect.currentframe(), 'empty')"
-last_line = "fvc.save_to_file('_temp.pickle')\n"
+last_line = f"fvc.save_to_file('{pickle_name}')\n"
 
 # all built in types, used to distinguish custom class from builtin types
 builtin_types = set()
@@ -95,6 +96,11 @@ class FindVariableChanges:
         self.last_frame = frame
         self.record: dict = []
         self.pending_print = ""
+        self.pending_input = None
+
+        # Load the input list
+        with open("input.pickle", "rb") as file:
+            self.input_list = pickle.load(file)
 
         self.update(frame, "init")
 
@@ -120,6 +126,9 @@ class FindVariableChanges:
         if self.pending_print: # add print tag if pending
             record["print"] = self.pending_print
             self.pending_print = ""
+        if self.pending_input is not None: # add input tag if pending
+            record["input"] = self.pending_input
+            self.pending_input = None
         self.record.append(record)
         self.last_frame = self.frame
     
@@ -142,11 +151,20 @@ class FindVariableChanges:
         self.pending_print = str(sep).join([str(arg) for arg in args]) + end
         print(*args, sep=sep, end=end, file=file, flush=flush)
 
-    # TODO: override input()
+    # Override input()
     def input(self, prompt=""):
-        # Do something...
-        raise AttributeError("input() is not allowed")
-        # input(prompt)
+        self.pending_input = str(prompt)
+        # Input list contains user input
+        if len(self.input_list) > 0:
+            return self.input_list.pop(0)
+        # Input list is empty (exit execution to prompt more inputs)
+        else:
+            # Add a tag to the record
+            self.record.append({"status": "need input", "input": str(prompt)})
+            # Pickle the current progress
+            self.save_to_file(pickle_name)
+            # Exit
+            sys.exit(1)
 
     class _FrameTypeCopy:
         '''FrameType cannot be copied, and is mutable. Thus we created a custom 

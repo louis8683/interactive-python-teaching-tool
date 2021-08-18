@@ -5,7 +5,7 @@ import subprocess
 from pathlib import Path
 import sys
 
-from PySide6.QtWidgets import QApplication, QFileDialog, QMainWindow, QTableWidgetItem, QWidget, QPushButton
+from PySide6.QtWidgets import QApplication, QFileDialog, QInputDialog, QMainWindow, QTableWidgetItem, QWidget, QPushButton
 from PySide6.QtCore import QDir, QFile, QTranslator, Slot
 
 from script.analyze_src_code import SourceCodeAnalyzer
@@ -127,9 +127,13 @@ class PythonEditor(QWidget):
         try:
             self.analyzer
         except AttributeError:
+            # init variables
             self.analyzer = SourceCodeAnalyzer(self.filename)
             self.action_no = 0
-            self.highlighted_lines = [self.analyzer.actions[self.action_no][0]]
+            self.highlighted_lines = []
+            self.input_list = []
+            # clear output
+            self.ui.outputTextBrowser.clear()
             print(self.analyzer.actions)
 
         # Last action?
@@ -147,7 +151,20 @@ class PythonEditor(QWidget):
             del self.analyzer
             print("Last line") # TODO: hint that we had reached the last line
             return False
-            
+
+        # Need input
+        if self.analyzer.actions[self.action_no][0] == "need input":
+            # Get input from user
+            text, stat = QInputDialog(self).getText(self, "input()", self.analyzer.actions[self.action_no][1])
+            if stat:
+                # Put input into input list
+                self.input_list.append(text)
+                # Rerun analyzer
+                self.analyzer.rerun(self.input_list)
+                print(self.analyzer.actions)
+            else:
+                return False
+
         # Highlight
         self.last_highlighted_lines = self.highlighted_lines
         self.highlighted_lines = [self.analyzer.actions[self.action_no][0]]
@@ -164,15 +181,17 @@ class PythonEditor(QWidget):
         record_no = self.analyzer.actions[self.action_no][2]
         vars = self.analyzer.get_variables(record_no)
         self.ui.globalVarTableWidget.setRowCount(len(vars["global"]))
-        self.ui.globalVarTableWidget.setColumnCount(2)
+        self.ui.globalVarTableWidget.setColumnCount(3)
         for i, var_name in enumerate(vars["global"]):
             self.ui.globalVarTableWidget.setItem(i, 0, QTableWidgetItem(var_name))
             self.ui.globalVarTableWidget.setItem(i, 1, QTableWidgetItem(str(vars["global"][var_name])))
+            self.ui.globalVarTableWidget.setItem(i, 2, QTableWidgetItem(str(type(vars["global"][var_name]))))
         self.ui.localVarTableWidget.setRowCount(len(vars["local"]))
-        self.ui.localVarTableWidget.setColumnCount(2)
+        self.ui.localVarTableWidget.setColumnCount(3)
         for i, var_name in enumerate(vars["local"]):
             self.ui.localVarTableWidget.setItem(i, 0, QTableWidgetItem(var_name))
             self.ui.localVarTableWidget.setItem(i, 1, QTableWidgetItem(str(vars["local"][var_name])))
+            self.ui.localVarTableWidget.setItem(i, 2, QTableWidgetItem(str(type(vars["local"][var_name]))))
         
         # Increment action no
         self.action_no += 1
