@@ -1,8 +1,8 @@
 import re
 import os
 
-import find_variable_changes as fvc
-import source_code_parser as scp
+import script.find_variable_changes as fvc
+import script.source_code_parser as scp
 
 class ScriptRewriter:
     def __init__(self, sript_filename: str):

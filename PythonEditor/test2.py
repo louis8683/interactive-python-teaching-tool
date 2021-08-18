@@ -15,7 +15,10 @@ class CC:
     
     def scream(self):
         print(self.name)
-
+    
+    class InnerCC:
+        def __init__(self):
+            print("shy...")
 
 li = []
 for i in range(10):
@@ -35,6 +38,7 @@ cc = CC()
 cc.scream()
 
 cc = CC()
+innerCC = cc.InnerCC()
 
 cc.scream()
 

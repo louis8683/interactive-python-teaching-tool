@@ -1,14 +1,15 @@
 import inspect
 from types import FrameType, MethodType, ModuleType
-from copy import Error, deepcopy
+from copy import deepcopy
 import pickle
 import types
 import builtins
 from typing import Any
+import sys
 
 # insert "[command]" into every line
 # search the output for our tag
-first_line = "import inspect; from find_variable_changes import FindVariableChanges as FVC; fvc = FVC(inspect.currentframe());\n"
+first_line = "import inspect; from script.find_variable_changes import FindVariableChanges as FVC; fvc = FVC(inspect.currentframe()); print = fvc.print; input = fvc.input;\n"
 command_start = "fvc.update(inspect.currentframe(), 'start'); "
 command_end = "; fvc.update(inspect.currentframe(), 'end')"
 command_return = "fvc.update(inspect.currentframe(), 'return'); "
@@ -23,6 +24,7 @@ for builtin_type in builtins.__dict__.values():
     except TypeError: # unhashable types
         continue
 
+# Module type cannot be pickled, thus we create a picklable dummy version.
 class ModuleTypeCopy:
     def __init__(self, module: types.ModuleType):
         self._str = module.__str__()
@@ -37,6 +39,9 @@ class ModuleTypeCopy:
     def __repr__(self) -> str:
         return self._repr
 
+# __main__.[Custom Class Name] type require executing in __main__. Replace this 
+# with a custom class copy dummy type to not have to import the file when we are
+# analyzing the frames.
 class CustomClassCopy:
     '''A replacement for custom classes to remove __main__ from the class definition/instances.
     Otherwise, we need to import the file we just executed when we load our pickle to analyze.'''
@@ -78,11 +83,19 @@ def replace_main_recursively(obj):
                 pass
     return cpy
 
+
+
+
+# TODO: Error examination
+# TODO: file I/O (cannot use relative path)
+
 class FindVariableChanges:
     def __init__(self, frame: FrameType):
         self.frame = frame
         self.last_frame = frame
         self.record: dict = []
+        self.pending_print = ""
+
         self.update(frame, "init")
 
     def update(self, frame: FrameType, cmd_position: str):
@@ -103,7 +116,11 @@ class FindVariableChanges:
         diff = self._diff_of_vars()
 
         # update record and last_frame
-        self.record.append({"diff": diff, "line_no": int(frame.f_lineno) - 1, "frame": self.frame, "position": cmd_position})
+        record = {"diff": diff, "line_no": int(frame.f_lineno) - 1, "frame": self.frame, "position": cmd_position}
+        if self.pending_print: # add print tag if pending
+            record["print"] = self.pending_print
+            self.pending_print = ""
+        self.record.append(record)
         self.last_frame = self.frame
     
     def save_to_file(self, filename: str):
@@ -117,6 +134,19 @@ class FindVariableChanges:
             pickle.dump(self, file)
         self.frame = frame
         self.last_frame = last_frame
+    
+    # Override the print() and input() functions to give us control of IO
+    # (Decorator pattern)
+    def print(self, *args, sep: str=" ", end: str="\n", file=sys.stdout, flush=False):
+        # Add the printed string into the last record
+        self.pending_print = str(sep).join([str(arg) for arg in args]) + end
+        print(*args, sep=sep, end=end, file=file, flush=flush)
+
+    # TODO: override input()
+    def input(self, prompt=""):
+        # Do something...
+        raise AttributeError("input() is not allowed")
+        # input(prompt)
 
     class _FrameTypeCopy:
         '''FrameType cannot be copied, and is mutable. Thus we created a custom 

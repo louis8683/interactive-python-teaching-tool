@@ -4,11 +4,12 @@ from typing import Any
 import pickle
 import os
 import sys
-import json
+import re
+from copy import deepcopy
 
-from find_variable_changes import FindVariableChanges
-import source_code_parser as scp
-import script_rewriter as sr
+from script.find_variable_changes import FindVariableChanges
+import script.source_code_parser as scp
+import script.script_rewriter as sr
 
 class SourceCodeAnalyzer:
     def __init__(self, filename="", line_no_start=1):
@@ -48,7 +49,7 @@ class SourceCodeAnalyzer:
     
     def analyze(self, fvc: FindVariableChanges) -> list:
         # Parse records into action of each line
-        actions = []
+        actions: list[int,dict,int] = [] # (line_no, events, record_no)
         
         # Lambdas for quick access
         g_deleted = lambda i: self.fvc.record[i]['diff']['global']['deleted']
@@ -59,18 +60,20 @@ class SourceCodeAnalyzer:
         l_changed = lambda i: self.fvc.record[i]['diff']['local']['changed']
         
         i = 1 # Ignore 0th line (command from fvc)
+        line_max_seen = 0
         while i < len(fvc.record):
             
             # Case 1: function or class definition.
-            # Pattern: line_no jumped forward
-            if fvc.record[i]['line_no'] > fvc.record[i-1]['line_no']:
+            # Pattern: line_no jumped forward to unseen line
+            if fvc.record[i]['line_no'] > fvc.record[i-1]['line_no'] and fvc.record[i]['line_no'] > line_max_seen:
                 # Check next lines of last executed line for [def] or [class]
                 for target_line in range(fvc.record[i-1]['line_no'] + 1, fvc.record[i]['line_no']):    
                     for start, end, indentation, keyword in self.parser.code_blocks:
                         keyword_line = start - 1
                         if keyword_line == target_line and keyword in ("def", "class") and self.parser.indentations[keyword_line] == self.parser.indentations[fvc.record[i-1]['line_no']]:
-                            actions.append((target_line, {keyword: self.parser.lines[start - 1]}))
-            
+                            actions.append((target_line, {keyword: self.parser.lines[start - 1]}, i-1))
+            line_max_seen = max(line_max_seen, fvc.record[i]['line_no'])
+
             # Case 2: variable added/deleted/changed in this line
             # Not including jumping commands, such as function calls (including class instantiation calling __init__())
             
@@ -100,14 +103,38 @@ class SourceCodeAnalyzer:
             
             # TODO: Case 3: return
 
+            # TODO: Case 4: for loop (ex: for i in range(10), the i is a variable)
+
+            # Case 5: print
+            # only locate rear commands
+            if fvc.record[i]['position'] == "end": # rear command
+                # Find print tag
+                if "print" in fvc.record[i]:
+                    events["print"] = fvc.record[i]["print"]
+
+            # TODO: Case 6: input
                 
             # Append actions
             if i == len(fvc.record) - 1 or fvc.record[i]['position'] in ("empty", "end"):
-                actions.append((fvc.record[i]['line_no'], events))
+                actions.append((fvc.record[i]['line_no'], events, i))
             
             # Increment i
             i += 1
         return actions
+    
+    def get_variables(self, record_no: int, remove_dunder=True, remove_names=["inspect"]):
+        g_vars = self.fvc.record[record_no]['frame'].f_globals
+        l_vars = self.fvc.record[record_no]['frame'].f_locals
+        if remove_dunder:
+            for var_name in deepcopy(g_vars):
+                if re.match("__.*__", var_name) or var_name in remove_names:
+                    del g_vars[var_name]
+            for var_name in deepcopy(l_vars):
+                if re.match("__.*__", var_name) or var_name in remove_names:
+                    del l_vars[var_name]
+        return {"global": g_vars, "local": l_vars}
+
+
 
 if __name__ == "__main__":
     # Read filename from command line
