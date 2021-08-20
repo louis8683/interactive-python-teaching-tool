@@ -1,7 +1,12 @@
 from pprint import pprint
 
-a = int(input("Please input a number: "))
+pprint("Hi")
 
-a = [a] * 10
+a = [10] * 10
 
-pprint(a)
+
+print(a)
+print(a + 10)
+print("Hello!", a)
+
+

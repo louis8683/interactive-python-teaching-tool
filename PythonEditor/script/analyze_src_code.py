@@ -35,7 +35,7 @@ class SourceCodeAnalyzer:
             pickle.dump(input_list, file)
 
         # Mine data
-        self.fvc = self.extract_data_from_source_file(delete_intermediate_files=False)
+        self.fvc = self.extract_data_from_source_file(delete_intermediate_files=True)
 
         # Analyze
         self.actions = self.analyze(self.fvc)

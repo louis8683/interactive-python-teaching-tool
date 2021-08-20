@@ -24,6 +24,9 @@
 ### Run
 > ```PYTHON_PATH run.py```
 
+#### Compile UI
+> ```pyside6-uic form.ui > ui_pythoneditor.py```
+
 ## What is this project built with?
 
 #### Since this is a project targeted for learning Python, we use as much Python as we could! Including QT with Python (for UI), execution tools (to create the line-by-line details), and other utilities... 

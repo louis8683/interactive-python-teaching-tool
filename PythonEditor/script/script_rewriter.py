@@ -31,11 +31,9 @@ class ScriptRewriter:
 
         # find code blocks
         codeblocks = self.parser.code_blocks
-        print(codeblocks)
 
         # find code block starts (we cannot add commands there)
         codeblocks_starts = set([start + len(fvc.first_lines) - 1 for start, _, _, _ in codeblocks])
-        print(codeblocks_starts)
 
         # add the command
         is_empty_line = lambda line: bool(re.fullmatch("| *| *#.*", line))
