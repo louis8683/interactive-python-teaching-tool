@@ -4,7 +4,8 @@ import os
 import script.find_variable_changes as fvc
 import script.source_code_parser as scp
 
-# TODO: triple quote is not considered
+# TODO: triple quote is not considered ('''something something...''')
+# TODO: line break is not considered (\)
 
 class ScriptRewriter:
     def __init__(self, sript_filename: str):
@@ -25,37 +26,44 @@ class ScriptRewriter:
                 self.lines.append(line)
 
     def _add_commands(self):
-        # add a line 0
-        self.lines.insert(1, fvc.first_line)
+        # insert leading commands of fvc into lines from index 1
+        self.lines = self.lines[0:1] + fvc.first_lines + self.lines[1:]
 
         # find code blocks
         codeblocks = self.parser.code_blocks
         print(codeblocks)
 
         # find code block starts (we cannot add commands there)
-        codeblocks_starts = set([start for (start, end, indentation, keyword) in codeblocks])
+        codeblocks_starts = set([start + len(fvc.first_lines) - 1 for start, _, _, _ in codeblocks])
         print(codeblocks_starts)
 
         # add the command
         is_empty_line = lambda line: bool(re.fullmatch("| *| *#.*", line))
         is_return_line = lambda line: bool(re.fullmatch("^ *return( *.*|\(*.*)$", line))
         for line_no_new, line in enumerate(self.lines):
-            if line_no_new in (0, 1): # ignore index 0 (None) and 1 (first command from fvc)
+            if line_no_new <= len(fvc.first_lines): # ignore index 0 (None) and first commands from fvc
                 continue
             
+            
+            
+            # Add commands
             if line_no_new not in codeblocks_starts:
-                line = line.splitlines()[0]
+                line = line.splitlines()[0] # remove newline
                 if is_return_line(line):
-                    indentation = self.parser.indentations[line_no_new - 1]
-                    self.lines[line_no_new] = " " * indentation + fvc.command_return + line.lstrip() + "\n"
+                    indentation = self.parser.indentations[line_no_new - len(fvc.first_lines)]
+                    self.lines[line_no_new] = fvc.leading_spaces + " " * indentation + fvc.command_return + line.lstrip() + "\n"
                 elif not is_empty_line(line):
-                    indentation = self.parser.indentations[line_no_new - 1]
-                    self.lines[line_no_new] = " " * indentation + fvc.command_start + line.lstrip() + fvc.command_end + "\n"
+                    indentation = self.parser.indentations[line_no_new - len(fvc.first_lines)]
+                    self.lines[line_no_new] = fvc.leading_spaces + " " * indentation + fvc.command_start + line.lstrip() + fvc.command_end + "\n"
                 else:
-                    # self.lines[line_no_new] = " " * self.parser.indentations[line_no_new - 1] + fvc.command_empty + "\n"
-                    pass
-        # Add the last line
-        self.lines.append(fvc.last_line)
+                    # Add the leading spaces from fvc
+                    self.lines[line_no_new] = fvc.leading_spaces + self.lines[line_no_new]
+            else:
+                # Add the leading spaces from fvc
+                self.lines[line_no_new] = fvc.leading_spaces + self.lines[line_no_new]
+        
+        # Add the last lines
+        self.lines += fvc.last_lines
 
     def temp_file_name_generator(self, original_filename, name_func=lambda name: f"_{name}_temp.py"):
         return os.path.join(os.getcwd() ,name_func(os.path.basename(original_filename)))

@@ -14,6 +14,16 @@
 - Tutorial videos built inside.
 - Advanced visualization (such as trees) to learn about data structures and algorithms.
 
+## How to use?
+
+### Requirements:
+- Python 3.8+
+- Python packages
+    - pyside6 (QT for Python)
+
+### Run
+> ```PYTHON_PATH run.py```
+
 ## What is this project built with?
 
 #### Since this is a project targeted for learning Python, we use as much Python as we could! Including QT with Python (for UI), execution tools (to create the line-by-line details), and other utilities... 

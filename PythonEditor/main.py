@@ -1,10 +1,11 @@
 # This Python file uses the following encoding: utf-8
 from typing import Any
-from PySide6.QtGui import QFont, QFontDatabase, QPalette, QTextCursor, Qt
+from PySide6.QtGui import QFont, QFontDatabase, QPalette, QTextCharFormat, QTextCursor, Qt
 from syntax_highlighter import PythonSyntaxHighlighter
 import subprocess
 from pathlib import Path
 import sys
+import os
 
 from PySide6.QtWidgets import QApplication, QFileDialog, QInputDialog, QMainWindow, QTableWidget, QTableWidgetItem, QWidget, QPushButton
 from PySide6.QtCore import QDir, QFile, QTranslator, Slot
@@ -139,24 +140,35 @@ class PythonEditor(QWidget):
 
         # Last action?
         if self.action_no == len(self.analyzer.actions):
-            # Remove highlights
-            self.last_highlighted_lines = self.highlighted_lines
-            self.highlighted_lines = []
-            self.highlight_lines(self.highlighted_lines, self.last_highlighted_lines, line_no_start=self.analyzer.offset)
-            # Reset tables
-            self.ui.globalVarTableWidget.setRowCount(0)
-            self.ui.globalVarTableWidget.setColumnCount(0)
-            self.ui.localVarTableWidget.setRowCount(0)
-            self.ui.localVarTableWidget.setColumnCount(0)
-            # Delete analyzer
-            del self.analyzer
+            self.line_by_line_clean_up()
             print("Last line") # TODO: hint that we had reached the last line
             return False
 
+        # Extract action
+        line_no, events, record_no = self.analyzer.actions[self.action_no]
+
+        # Error
+        if "error" in events:
+            # Show error message on output
+            error = events["error"]
+            error_msg = f"{str(type(error))[8:-2]}: {str(error)}"
+            # Write to output window.
+            format = QTextCharFormat()
+            format.setForeground(Qt.red)
+            self.write_to_output(error_msg, format)
+            # Clean up
+            self.line_by_line_clean_up()
+            return False
+
         # Need input
-        if self.analyzer.actions[self.action_no][0] == "need input":
+        if "input" in events:
+            # Move highlight
+            self.last_highlighted_lines = self.highlighted_lines
+            self.highlighted_lines = [line_no]
+            self.highlight_lines(self.highlighted_lines, self.last_highlighted_lines, line_no_start=self.analyzer.offset)
+            
             # Get input from user
-            text, stat = QInputDialog(self).getText(self, "input()", self.analyzer.actions[self.action_no][1])
+            text, stat = QInputDialog(self).getText(self, "input()", self.analyzer.actions[self.action_no][1]["input"])
             if stat:
                 # Put input into input list
                 self.input_list.append(text)
@@ -166,9 +178,6 @@ class PythonEditor(QWidget):
             else:
                 return False
 
-        # Extract action
-        line_no, events, record_no = self.analyzer.actions[self.action_no]
-
         # Highlight
         self.last_highlighted_lines = self.highlighted_lines
         self.highlighted_lines = [line_no]
@@ -176,10 +185,7 @@ class PythonEditor(QWidget):
         
         # Update output for print()
         if "print" in events:
-            print_text = events["print"]
-            cursor = QTextCursor(self.ui.outputTextBrowser.document())
-            cursor.movePosition(QTextCursor.End)
-            cursor.insertText(print_text)
+            self.write_to_output(events["print"])
 
         # Update variables
         vars = self.analyzer.get_variables(record_no)
@@ -203,14 +209,38 @@ class PythonEditor(QWidget):
         
         return True
 
+    def write_to_output(self, msg:str, format:QTextCharFormat=None):
+        cursor = QTextCursor(self.ui.outputTextBrowser.document())
+        cursor.movePosition(QTextCursor.End)
+        if format:
+            cursor.insertText(msg, format)
+        else:
+            cursor.insertText(msg)
+
     def set_table_row(self, table:QTableWidget, row, var_name:str, var_value:Any):
         table.setItem(row, 0, QTableWidgetItem(var_name))
         table.setItem(row, 1, QTableWidgetItem(str(var_value)))
         table.setItem(row, 2, QTableWidgetItem(str(type(var_value))))
     
+    def reset_tables(self):
+        self.ui.globalVarTableWidget.setRowCount(0)
+        self.ui.globalVarTableWidget.setColumnCount(0)
+        self.ui.localVarTableWidget.setRowCount(0)
+        self.ui.localVarTableWidget.setColumnCount(0)
+    
+    def line_by_line_clean_up(self):
+        self.remove_highlights(self.analyzer)
+        self.reset_tables()
+        del self.analyzer
+
     def hightlight_row(self, table:QTableWidget, row, color=Qt.yellow):
         for col in range(table.columnCount()):
             table.item(row, col).setBackground(color)
+
+    def remove_highlights(self, analyzer):
+        self.last_highlighted_lines = self.highlighted_lines
+        self.highlighted_lines = []
+        self.highlight_lines(self.highlighted_lines, self.last_highlighted_lines, line_no_start=analyzer.offset)
 
     def highlight_lines(self, highlight: list[int], old_highlight: list[int], color=Qt.yellow, line_no_start=0):
         for line in set(highlight + old_highlight): # Only go through lines highlighted or previously highlighted

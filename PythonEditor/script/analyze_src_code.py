@@ -11,8 +11,10 @@ from script.find_variable_changes import FindVariableChanges
 import script.source_code_parser as scp
 import script.script_rewriter as sr
 
+# TODO: Do we need to join working directory for full path?
 input_list_pickle_filename = "input.pickle"
 pickle_filename = "_temp.pickle"
+ignore_varname_list = ["inspect", "print", "input", "sys"] # TODO: What if the user uses these as var name or import these?
 
 class SourceCodeAnalyzer:
     def __init__(self, filename, line_no_start=1, input_list:list=[], python_path="python"):
@@ -33,7 +35,7 @@ class SourceCodeAnalyzer:
             pickle.dump(input_list, file)
 
         # Mine data
-        self.fvc = self.extract_data_from_source_file()
+        self.fvc = self.extract_data_from_source_file(delete_intermediate_files=False)
 
         # Analyze
         self.actions = self.analyze(self.fvc)
@@ -76,10 +78,16 @@ class SourceCodeAnalyzer:
         line_max_seen = 0
         while i < len(fvc.record):
 
-            # Special Case: input()
-            if "status" in fvc.record[i] and fvc.record[i]["status"] == "need input":
-                actions.append(("need input", fvc.record[i]["input"]))
-                return actions
+            # Special Cases
+            if "status" in fvc.record[i]:
+                # Special case: input()
+                if fvc.record[i]["status"] == "need input":
+                    actions.append((fvc.record[i]["line_no"], {"input": fvc.record[i]["input"]}, i))
+                    return actions
+                # Special Case: error()
+                elif fvc.record[i]["status"] == "error":
+                    actions.append((fvc.record[i]["line_no"], {"error": fvc.record[i]["error"]}, i))
+                    return actions        
             
             # Case 1: function or class definition.
             # Pattern: line_no jumped forward to unseen line
@@ -142,7 +150,7 @@ class SourceCodeAnalyzer:
             i += 1
         return actions
     
-    def get_variables(self, record_no: int, remove_dunder=True, remove_names=["inspect", "print", "input"]):
+    def get_variables(self, record_no: int, remove_dunder=True, remove_names=ignore_varname_list):
         g_vars = self.fvc.record[record_no]['frame'].f_globals
         l_vars = self.fvc.record[record_no]['frame'].f_locals
         if remove_dunder:

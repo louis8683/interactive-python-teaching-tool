@@ -21,7 +21,7 @@ class CC:
             print("shy...")
 
 li = []
-for i in range(10):
+for i in range(3):
     li.append(i)
     li.append(0)
 print(li)

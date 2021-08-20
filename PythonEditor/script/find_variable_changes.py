@@ -1,21 +1,27 @@
 import inspect
-from types import FrameType, MethodType, ModuleType
-from copy import deepcopy
+from types import FrameType, ModuleType
 import pickle
-import types
 import builtins
 from typing import Any
 import sys
 
+from script.custom_types import ModuleTypeCopy, CustomClassCopy, FrameTypeCopy, CustomStdout
+
 pickle_name = "_temp.pickle"
 # insert "[command]" into every line
 # search the output for our tag
-first_line = "import inspect; from script.find_variable_changes import FindVariableChanges as FVC; fvc = FVC(inspect.currentframe()); print = fvc.print; input = fvc.input;\n"
+first_lines = [
+    "import inspect; from script.find_variable_changes import FindVariableChanges as FVC; fvc = FVC(inspect.currentframe()); import sys; sys.stdout = fvc.stdout; input = fvc.input;\n",
+    "try:\n"]
+leading_spaces = "    "
 command_start = "fvc.update(inspect.currentframe(), 'start'); "
 command_end = "; fvc.update(inspect.currentframe(), 'end')"
 command_return = "fvc.update(inspect.currentframe(), 'return'); "
 command_empty = "fvc.update(inspect.currentframe(), 'empty')"
-last_line = f"fvc.save_to_file('{pickle_name}')\n"
+last_lines = [
+    f"    fvc.save_to_file('{pickle_name}')\n",
+    f"except Exception as e:\n",
+    f"    fvc.on_error(e)\n"]
 
 # all built in types, used to distinguish custom class from builtin types
 builtin_types = set()
@@ -25,69 +31,6 @@ for builtin_type in builtins.__dict__.values():
     except TypeError: # unhashable types
         continue
 
-# Module type cannot be pickled, thus we create a picklable dummy version.
-class ModuleTypeCopy:
-    def __init__(self, module: types.ModuleType):
-        self._str = module.__str__()
-        self._repr = module.__repr__()
-    
-    def __eq__(self, o: object) -> bool:
-        return self._str == str(o) and self._repr == repr(o)
-
-    def __str__(self) -> str:
-        return self._str
-    
-    def __repr__(self) -> str:
-        return self._repr
-
-# __main__.[Custom Class Name] type require executing in __main__. Replace this 
-# with a custom class copy dummy type to not have to import the file when we are
-# analyzing the frames.
-class CustomClassCopy:
-    '''A replacement for custom classes to remove __main__ from the class definition/instances.
-    Otherwise, we need to import the file we just executed when we load our pickle to analyze.'''
-    def __init__(self, obj):
-        self.class_name = repr(obj.__class__).split(".")[-1][:-2]
-        try:
-            self.hash = obj.__hash__()
-            self.vars = obj.__dict__.copy()
-        except TypeError: # descriptor '__hash__' of 'object' object needs an argument
-            # This is the class definition, not an instance (<class 'type'>)
-            self.hash = None
-            self.vars = {}
-        
-    def __eq__(self, o) -> bool:
-        try:
-            return self.hash == o.hash
-        except TypeError or AttributeError: # NoneType not hashable
-            return False
-    
-    def __repr__(self):
-        return f"<class '{self.class_name}'(dummy)> with hash {self.hash}"
-
-def replace_main_recursively(obj):
-    try:
-        if obj.__module__ != "__main__":
-            return obj
-    except AttributeError:
-        return obj
-    
-    cpy = CustomClassCopy(obj)
-    for varname in cpy.vars:
-        if type(cpy.vars[varname]) == ModuleType:
-            cpy.vars[varname] = ModuleTypeCopy(cpy.vars[varname])
-        else:
-            try:
-                if cpy.vars[varname].__module__ == "__main__":
-                    cpy.vars[varname] = replace_main_recursively(cpy.vars[varname])
-            except AttributeError:
-                pass
-    return cpy
-
-
-
-
-# TODO: Error examination
 # TODO: file I/O (cannot use relative path)
 
 class FindVariableChanges:
@@ -95,8 +38,9 @@ class FindVariableChanges:
         self.frame = frame
         self.last_frame = frame
         self.record: dict = []
-        self.pending_print = ""
+        self.stdout = CustomStdout()
         self.pending_input = None
+        self.inserted_lines: int = 1
 
         # Load the input list
         with open("input.pickle", "rb") as file:
@@ -105,32 +49,27 @@ class FindVariableChanges:
         self.update(frame, "init")
 
     def update(self, frame: FrameType, cmd_position: str):
-        print(frame.f_lineno)
         # store parameter into this class object
-        self.frame = self._FrameTypeCopy(frame, should_convert_module=True)
+        self.last_frame = self.frame
+        self.frame = FrameTypeCopy(frame, should_convert_module=True)
 
         # swap custom types into CustomClassCopy
         for var_name in self.frame.f_globals:
-            self.frame.f_globals[var_name] = replace_main_recursively(self.frame.f_globals[var_name])
+            self.frame.f_globals[var_name] = self._replace_main_recursively(self.frame.f_globals[var_name])
         for var_name in self.frame.f_locals:
-            self.frame.f_locals[var_name] = replace_main_recursively(self.frame.f_locals[var_name])
-        
-        if self.frame.f_lineno == 38:
-            print(self.frame.f_globals)
+            self.frame.f_locals[var_name] = self._replace_main_recursively(self.frame.f_locals[var_name])
 
         # calculate difference
         diff = self._diff_of_vars()
 
-        # update record and last_frame
-        record = {"diff": diff, "line_no": int(frame.f_lineno) - 1, "frame": self.frame, "position": cmd_position}
-        if self.pending_print: # add print tag if pending
-            record["print"] = self.pending_print
-            self.pending_print = ""
+        # update record
+        record = {"diff": diff, "line_no": int(frame.f_lineno) - len(first_lines), "frame": self.frame, "position": cmd_position}
+        if self.stdout.pending: # add print tag if pending
+            record["print"] = self.stdout.read_all(clear=True)
         if self.pending_input is not None: # add input tag if pending
             record["input"] = self.pending_input
             self.pending_input = None
         self.record.append(record)
-        self.last_frame = self.frame
     
     def save_to_file(self, filename: str):
         '''Pickle this class into a file with [filename].
@@ -144,15 +83,8 @@ class FindVariableChanges:
         self.frame = frame
         self.last_frame = last_frame
     
-    # Override the print() and input() functions to give us control of IO
-    # (Decorator pattern)
-    def print(self, *args, sep: str=" ", end: str="\n", file=sys.stdout, flush=False):
-        # Add the printed string into the last record
-        self.pending_print = str(sep).join([str(arg) for arg in args]) + end
-        print(*args, sep=sep, end=end, file=file, flush=flush)
-
-    # Override input()
     def input(self, prompt=""):
+        '''Override input(). Use this method (instead of redirecting [sys.stdin]) to display the prompt in the UI.'''
         self.pending_input = str(prompt)
         # Input list contains user input
         if len(self.input_list) > 0:
@@ -160,53 +92,44 @@ class FindVariableChanges:
         # Input list is empty (exit execution to prompt more inputs)
         else:
             # Add a tag to the record
-            self.record.append({"status": "need input", "input": str(prompt)})
+            self.record.append({"status": "need input", "input": str(prompt), "line_no": int(self.frame.f_lineno) - len(first_lines)})
             # Pickle the current progress
             self.save_to_file(pickle_name)
             # Exit
             sys.exit(1)
 
-    class _FrameTypeCopy:
-        '''FrameType cannot be copied, and is mutable. Thus we created a custom 
-        type to store the last frame.
-        Convert modules to strings so this class can be pickled/deepcopied.'''
-        def __init__(self, frame: FrameType, should_convert_module=True):
-            # deepcopy cannot pickle modules, so we use custom copy
-            self.f_globals = self._copy_dict(frame.f_globals, convert=should_convert_module)
-            self.f_locals = self._copy_dict(frame.f_locals, convert=should_convert_module)
-            self.f_lineno = deepcopy(frame.f_lineno)
+    def on_error(self, error: Exception):
+        '''Called when unhandled error occured (handled by last except block of rewritten code).'''
+        # Add a tag to the record
+        self.record.append({"status": "error", "error": error, "line_no": int(self.frame.f_lineno) - len(first_lines)})
+        # Pickle the current progress
+        self.save_to_file(pickle_name)
+        # Exit
+        sys.exit(1)
+    
+    def _replace_main_recursively(self, obj):
+        ''' __main__.[Custom Class Name] type require executing in __main__. Replace this 
+        with a custom class copy dummy type to not have to import the file when we are
+        analyzing the frames.
+        '''
+        try:
+            if obj.__module__ != "__main__":
+                return obj
+        except AttributeError:
+            return obj
         
-        def module_as_str(self):
-            '''All the module value converted to dummy module type _ModuleTypeCopy'''
-            def convert(target: dict):
-                for key in target:
-                    # Find all the modules
-                    if type(target[key]) == types.ModuleType:
-                        # Turn them into strings
-                        target[key] = ModuleTypeCopy(target[key])
-            convert(self.f_globals)
-            convert(self.f_locals)
-        
-        def _copy_dict(self, source: dict, convert=False):
-            # when we meet a module, we don't deepcopy
-            new_copy = {}
-            for key in source:
-                # NOTE: (important) don't copy class FindVariableChanges, record will be recursively put into memory
-                if key in ('fvc', 'FVC', 'FindVariableChanges'):
-                    continue
-                # Module type
-                elif type(source[key]) == types.ModuleType:
-                    # TODO: nested module is not checked.
-                    if convert:
-                        new_copy[key] = ModuleTypeCopy(source[key])
-                    else:
-                        new_copy[key] = source[key]
-                # Class type
-                elif type(source[key]) not in builtin_types:
-                    new_copy[key] = source[key]
-                else:
-                    new_copy[key] = deepcopy(source[key])
-            return new_copy
+        cpy = CustomClassCopy(obj)
+        for varname in cpy.vars:
+            if type(cpy.vars[varname]) == ModuleType:
+                cpy.vars[varname] = ModuleTypeCopy(cpy.vars[varname])
+            else:
+                try:
+                    if cpy.vars[varname].__module__ == "__main__":
+                        cpy.vars[varname] = self._replace_main_recursively(cpy.vars[varname])
+                except AttributeError:
+                    pass
+        return cpy
+
     
     def _user_defined_vars(self, frame: FrameType):
         global_vars = [key for key in frame.f_globals.keys() if key[:2] != "__"]
