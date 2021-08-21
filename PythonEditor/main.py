@@ -5,7 +5,7 @@ from syntax_highlighter import PythonSyntaxHighlighter
 import subprocess
 import sys
 
-from PySide6.QtWidgets import QApplication, QFileDialog, QInputDialog, QMainWindow, QTableWidget, QTableWidgetItem, QWidget, QPushButton
+from PySide6.QtWidgets import QApplication, QFileDialog, QInputDialog, QMainWindow, QSlider, QTableWidget, QTableWidgetItem, QWidget, QPushButton
 from PySide6.QtCore import QDir, QFile, QTranslator, Slot
 
 from script.analyze_src_code import SourceCodeAnalyzer
@@ -51,6 +51,9 @@ class PythonEditor(QWidget):
         self.ui.editorEdit.textChanged.connect(self.on_text_changed)
 
         # Setup browser
+
+        # Setup slider
+        # self.ui.stepSlider.sliderMoved.connect(self.on_slider_moved)
 
 
     @Slot()
@@ -147,6 +150,8 @@ class PythonEditor(QWidget):
             self._input_list = []
             # clear output
             self.ui.outputTextBrowser.clear()
+            # setup slider
+            self.ui.stepSlider.setMaximum(len(self._analyzer.actions))
             print(self._analyzer.actions)
 
         # Last action?
@@ -157,6 +162,9 @@ class PythonEditor(QWidget):
 
         # Extract action
         line_no, events, record_no = self._analyzer.actions[self._action_no]
+        
+        # Move slider
+        self.ui.stepSlider.setValue(self._action_no)
 
         # ORDER: input -> error -> general
 
@@ -231,6 +239,20 @@ class PythonEditor(QWidget):
     def on_text_changed(self):
         # Did plain text changed?
         if self._last_plain_text != self.ui.editorEdit.toPlainText():
+            # NOTE: should we use key event detection for more complex controls?
+            self._tab_replacement = "    "
+            # Replace tabs in the block with 4 spaces
+            cursor = self.ui.editorEdit.textCursor()
+            position = cursor.position()
+            cursor.select(cursor.LineUnderCursor)
+            # Only replace line when there is tab. (to avoid recurrent on_text_changed() calls.)
+            if "\t" in cursor.selectedText():
+                new_text = cursor.selectedText().replace("\t", self._tab_replacement)
+                cursor.removeSelectedText()
+                cursor.insertText(new_text)
+                cursor.setPosition(position + len(self._tab_replacement) - 1)
+                self.ui.editorEdit.setTextCursor(cursor)
+
             # Update plain text.
             self._last_plain_text = self.ui.editorEdit.toPlainText()    
             # is line-by-line running?
@@ -240,6 +262,13 @@ class PythonEditor(QWidget):
                 self.run_line_by_line()
                 # Set the cursor format to the default input format (remove highlights etc.)
                 self.ui.editorEdit.textCursor().setBlockCharFormat(self._default_text_edit_format)
+    
+    # @Slot()
+    # def on_slider_moved(self):
+    #     # line-by-line running?
+    #     if self._analyzer is not None:
+    #         # TODO
+    #         pass
             
 
     def _move_current_line_highlight(self, current_line_no:int, color=Qt.yellow):

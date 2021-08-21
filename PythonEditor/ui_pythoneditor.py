@@ -17,105 +17,144 @@ class Ui_PythonEditor(object):
     def setupUi(self, PythonEditor):
         if not PythonEditor.objectName():
             PythonEditor.setObjectName(u"PythonEditor")
-        PythonEditor.resize(973, 809)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(PythonEditor.sizePolicy().hasHeightForWidth())
-        PythonEditor.setSizePolicy(sizePolicy)
-        PythonEditor.setMinimumSize(QSize(500, 500))
-        self.verticalLayout = QVBoxLayout(PythonEditor)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.horizontalLayout_3 = QHBoxLayout()
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.verticalLayout_4 = QVBoxLayout()
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.horizontalLayout = QHBoxLayout()
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.newButton = QPushButton(PythonEditor)
+        PythonEditor.resize(700, 550)
+        PythonEditor.setMinimumSize(QSize(700, 550))
+        self.verticalLayout_7 = QVBoxLayout(PythonEditor)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.frame_4 = QFrame(PythonEditor)
+        self.frame_4.setObjectName(u"frame_4")
+        self.frame_4.setFrameShape(QFrame.StyledPanel)
+        self.frame_4.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_6 = QVBoxLayout(self.frame_4)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.newButton = QPushButton(self.frame_4)
         self.newButton.setObjectName(u"newButton")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.newButton.sizePolicy().hasHeightForWidth())
-        self.newButton.setSizePolicy(sizePolicy1)
 
-        self.horizontalLayout.addWidget(self.newButton)
+        self.horizontalLayout_2.addWidget(self.newButton)
 
-        self.openButton = QPushButton(PythonEditor)
+        self.openButton = QPushButton(self.frame_4)
         self.openButton.setObjectName(u"openButton")
-        sizePolicy1.setHeightForWidth(self.openButton.sizePolicy().hasHeightForWidth())
-        self.openButton.setSizePolicy(sizePolicy1)
 
-        self.horizontalLayout.addWidget(self.openButton)
+        self.horizontalLayout_2.addWidget(self.openButton)
 
-        self.saveButton = QPushButton(PythonEditor)
+        self.saveButton = QPushButton(self.frame_4)
         self.saveButton.setObjectName(u"saveButton")
 
-        self.horizontalLayout.addWidget(self.saveButton)
+        self.horizontalLayout_2.addWidget(self.saveButton)
 
-        self.saveAsButton = QPushButton(PythonEditor)
+        self.saveAsButton = QPushButton(self.frame_4)
         self.saveAsButton.setObjectName(u"saveAsButton")
 
-        self.horizontalLayout.addWidget(self.saveAsButton)
+        self.horizontalLayout_2.addWidget(self.saveAsButton)
 
-        self.runButton = QPushButton(PythonEditor)
+        self.runButton = QPushButton(self.frame_4)
         self.runButton.setObjectName(u"runButton")
 
-        self.horizontalLayout.addWidget(self.runButton)
+        self.horizontalLayout_2.addWidget(self.runButton)
 
-        self.lineByLineButton = QPushButton(PythonEditor)
+        self.lineByLineButton = QPushButton(self.frame_4)
         self.lineByLineButton.setObjectName(u"lineByLineButton")
-        sizePolicy1.setHeightForWidth(self.lineByLineButton.sizePolicy().hasHeightForWidth())
-        self.lineByLineButton.setSizePolicy(sizePolicy1)
 
-        self.horizontalLayout.addWidget(self.lineByLineButton)
+        self.horizontalLayout_2.addWidget(self.lineByLineButton)
 
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.verticalLayout_4.addLayout(self.horizontalLayout)
+        self.horizontalLayout_2.addItem(self.horizontalSpacer)
 
-        self.filenameLabel = QLabel(PythonEditor)
-        self.filenameLabel.setObjectName(u"filenameLabel")
+        self.label_5 = QLabel(self.frame_4)
+        self.label_5.setObjectName(u"label_5")
 
-        self.verticalLayout_4.addWidget(self.filenameLabel)
+        self.horizontalLayout_2.addWidget(self.label_5)
 
-        self.editorEdit = QTextEdit(PythonEditor)
-        self.editorEdit.setObjectName(u"editorEdit")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(5)
-        sizePolicy2.setHeightForWidth(self.editorEdit.sizePolicy().hasHeightForWidth())
-        self.editorEdit.setSizePolicy(sizePolicy2)
-        self.editorEdit.setMinimumSize(QSize(0, 0))
+        self.stepSlider = QSlider(self.frame_4)
+        self.stepSlider.setObjectName(u"stepSlider")
+        self.stepSlider.setOrientation(Qt.Horizontal)
+        self.stepSlider.setTickPosition(QSlider.TicksBelow)
+        self.stepSlider.setTickInterval(100)
 
-        self.verticalLayout_4.addWidget(self.editorEdit)
-
-        self.label = QLabel(PythonEditor)
-        self.label.setObjectName(u"label")
-
-        self.verticalLayout_4.addWidget(self.label)
-
-        self.outputTextBrowser = QTextBrowser(PythonEditor)
-        self.outputTextBrowser.setObjectName(u"outputTextBrowser")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(1)
-        sizePolicy3.setHeightForWidth(self.outputTextBrowser.sizePolicy().hasHeightForWidth())
-        self.outputTextBrowser.setSizePolicy(sizePolicy3)
-
-        self.verticalLayout_4.addWidget(self.outputTextBrowser)
+        self.horizontalLayout_2.addWidget(self.stepSlider)
 
 
-        self.horizontalLayout_3.addLayout(self.verticalLayout_4)
+        self.verticalLayout_6.addLayout(self.horizontalLayout_2)
 
-        self.verticalLayout_5 = QVBoxLayout()
+
+        self.verticalLayout_7.addWidget(self.frame_4)
+
+        self.frame_3 = QFrame(PythonEditor)
+        self.frame_3.setObjectName(u"frame_3")
+        self.frame_3.setMinimumSize(QSize(650, 500))
+        self.frame_3.setFrameShape(QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_5 = QVBoxLayout(self.frame_3)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.label_2 = QLabel(PythonEditor)
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setSpacing(1)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.frame = QFrame(self.frame_3)
+        self.frame.setObjectName(u"frame")
+        self.frame.setMinimumSize(QSize(375, 400))
+        self.frame.setFrameShape(QFrame.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_2 = QVBoxLayout(self.frame)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.filenameLabel = QLabel(self.frame)
+        self.filenameLabel.setObjectName(u"filenameLabel")
+        self.filenameLabel.setMinimumSize(QSize(0, 12))
+
+        self.verticalLayout.addWidget(self.filenameLabel)
+
+        self.editorEdit = QTextEdit(self.frame)
+        self.editorEdit.setObjectName(u"editorEdit")
+        self.editorEdit.setMinimumSize(QSize(0, 300))
+        self.editorEdit.setLineWrapMode(QTextEdit.NoWrap)
+
+        self.verticalLayout.addWidget(self.editorEdit)
+
+        self.label_2 = QLabel(self.frame)
         self.label_2.setObjectName(u"label_2")
+        self.label_2.setMinimumSize(QSize(0, 12))
 
-        self.verticalLayout_5.addWidget(self.label_2)
+        self.verticalLayout.addWidget(self.label_2)
 
-        self.globalVarTableWidget = QTableWidget(PythonEditor)
+        self.outputTextBrowser = QTextBrowser(self.frame)
+        self.outputTextBrowser.setObjectName(u"outputTextBrowser")
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.outputTextBrowser.sizePolicy().hasHeightForWidth())
+        self.outputTextBrowser.setSizePolicy(sizePolicy)
+        self.outputTextBrowser.setMinimumSize(QSize(0, 50))
+        self.outputTextBrowser.setMaximumSize(QSize(16777215, 50))
+        self.outputTextBrowser.setBaseSize(QSize(0, 50))
+
+        self.verticalLayout.addWidget(self.outputTextBrowser)
+
+
+        self.verticalLayout_2.addLayout(self.verticalLayout)
+
+
+        self.horizontalLayout.addWidget(self.frame)
+
+        self.frame_2 = QFrame(self.frame_3)
+        self.frame_2.setObjectName(u"frame_2")
+        self.frame_2.setMinimumSize(QSize(250, 100))
+        self.frame_2.setMaximumSize(QSize(250, 16777215))
+        self.frame_2.setFrameShape(QFrame.StyledPanel)
+        self.frame_2.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_4 = QVBoxLayout(self.frame_2)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.verticalLayout_3 = QVBoxLayout()
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.label_3 = QLabel(self.frame_2)
+        self.label_3.setObjectName(u"label_3")
+
+        self.verticalLayout_3.addWidget(self.label_3)
+
+        self.globalVarTableWidget = QTableWidget(self.frame_2)
         if (self.globalVarTableWidget.columnCount() < 3):
             self.globalVarTableWidget.setColumnCount(3)
         __qtablewidgetitem = QTableWidgetItem()
@@ -125,28 +164,17 @@ class Ui_PythonEditor(object):
         __qtablewidgetitem2 = QTableWidgetItem()
         self.globalVarTableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
         self.globalVarTableWidget.setObjectName(u"globalVarTableWidget")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.globalVarTableWidget.sizePolicy().hasHeightForWidth())
-        self.globalVarTableWidget.setSizePolicy(sizePolicy4)
-        self.globalVarTableWidget.setMinimumSize(QSize(0, 0))
-        self.globalVarTableWidget.horizontalHeader().setVisible(True)
-        self.globalVarTableWidget.horizontalHeader().setCascadingSectionResizes(False)
-        self.globalVarTableWidget.horizontalHeader().setHighlightSections(True)
-        self.globalVarTableWidget.horizontalHeader().setProperty("showSortIndicator", False)
         self.globalVarTableWidget.horizontalHeader().setStretchLastSection(True)
         self.globalVarTableWidget.verticalHeader().setVisible(False)
-        self.globalVarTableWidget.verticalHeader().setStretchLastSection(False)
 
-        self.verticalLayout_5.addWidget(self.globalVarTableWidget)
+        self.verticalLayout_3.addWidget(self.globalVarTableWidget)
 
-        self.label_3 = QLabel(PythonEditor)
-        self.label_3.setObjectName(u"label_3")
+        self.label_4 = QLabel(self.frame_2)
+        self.label_4.setObjectName(u"label_4")
 
-        self.verticalLayout_5.addWidget(self.label_3)
+        self.verticalLayout_3.addWidget(self.label_4)
 
-        self.localVarTableWidget = QTableWidget(PythonEditor)
+        self.localVarTableWidget = QTableWidget(self.frame_2)
         if (self.localVarTableWidget.columnCount() < 3):
             self.localVarTableWidget.setColumnCount(3)
         __qtablewidgetitem3 = QTableWidgetItem()
@@ -159,15 +187,19 @@ class Ui_PythonEditor(object):
         self.localVarTableWidget.horizontalHeader().setStretchLastSection(True)
         self.localVarTableWidget.verticalHeader().setVisible(False)
 
-        self.verticalLayout_5.addWidget(self.localVarTableWidget)
+        self.verticalLayout_3.addWidget(self.localVarTableWidget)
 
 
-        self.horizontalLayout_3.addLayout(self.verticalLayout_5)
+        self.verticalLayout_4.addLayout(self.verticalLayout_3)
 
-        self.horizontalLayout_3.setStretch(0, 3)
-        self.horizontalLayout_3.setStretch(1, 1)
 
-        self.verticalLayout.addLayout(self.horizontalLayout_3)
+        self.horizontalLayout.addWidget(self.frame_2)
+
+
+        self.verticalLayout_5.addLayout(self.horizontalLayout)
+
+
+        self.verticalLayout_7.addWidget(self.frame_3)
 
 
         self.retranslateUi(PythonEditor)
@@ -176,28 +208,43 @@ class Ui_PythonEditor(object):
     # setupUi
 
     def retranslateUi(self, PythonEditor):
-        PythonEditor.setWindowTitle(QCoreApplication.translate("PythonEditor", u"PythonEditor", None))
+        PythonEditor.setWindowTitle(QCoreApplication.translate("PythonEditor", u"Form", None))
         self.newButton.setText(QCoreApplication.translate("PythonEditor", u"New", None))
         self.openButton.setText(QCoreApplication.translate("PythonEditor", u"Open", None))
         self.saveButton.setText(QCoreApplication.translate("PythonEditor", u"Save", None))
         self.saveAsButton.setText(QCoreApplication.translate("PythonEditor", u"Save as", None))
-        self.runButton.setText(QCoreApplication.translate("PythonEditor", u"\u57f7\u884c Run", None))
-        self.lineByLineButton.setText(QCoreApplication.translate("PythonEditor", u"\u9010\u884c\u57f7\u884c", None))
-        self.filenameLabel.setText(QCoreApplication.translate("PythonEditor", u"No file opened yet.", None))
-        self.label.setText(QCoreApplication.translate("PythonEditor", u"Output", None))
+        self.runButton.setText(QCoreApplication.translate("PythonEditor", u"Run", None))
+        self.lineByLineButton.setText(QCoreApplication.translate("PythonEditor", u"Line-by-line", None))
+        self.label_5.setText(QCoreApplication.translate("PythonEditor", u"Step", None))
+        self.filenameLabel.setText(QCoreApplication.translate("PythonEditor", u"File: \u5c1a\u672a\u958b\u555f\u6a94\u6848", None))
+        self.editorEdit.setHtml(QCoreApplication.translate("PythonEditor", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'PMingLiU'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">        self._python_path = &quot;C:\\\\Python39\\\\python.exe&quot; # C:\\\\Users\\\\Louis\\\\</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">        self._python_path = &quot;C:\\\\Python39\\\\python.exe&quot; # C:\\\\Users\\\\Louis\\\\        self._python_path = &quot;C:\\\\Python39\\\\python.exe&quot; # C:\\\\Users\\\\Louis\\\\</span></p></body></html>", None))
+        self.label_2.setText(QCoreApplication.translate("PythonEditor", u"Output", None))
         self.outputTextBrowser.setHtml(QCoreApplication.translate("PythonEditor", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'PMingLiU'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;\"><br /></p></body></html>", None))
-        self.label_2.setText(QCoreApplication.translate("PythonEditor", u"Global Variables \u5168\u57df\u8b8a\u6578", None))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">output1</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">output1</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">output1</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">output1</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">output1</p>\n"
+"<p st"
+                        "yle=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">output1</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">output1</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.label_3.setText(QCoreApplication.translate("PythonEditor", u"Global Variables \u5168\u57df\u8b8a\u6578", None))
         ___qtablewidgetitem = self.globalVarTableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("PythonEditor", u"Name \u540d\u7a31", None));
         ___qtablewidgetitem1 = self.globalVarTableWidget.horizontalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("PythonEditor", u"Value \u503c", None));
         ___qtablewidgetitem2 = self.globalVarTableWidget.horizontalHeaderItem(2)
         ___qtablewidgetitem2.setText(QCoreApplication.translate("PythonEditor", u"Type \u578b\u5225", None));
-        self.label_3.setText(QCoreApplication.translate("PythonEditor", u"Local Variables \u5340\u57df\u8b8a\u6578", None))
+        self.label_4.setText(QCoreApplication.translate("PythonEditor", u"Local Variables \u5340\u57df\u8b8a\u6578", None))
         ___qtablewidgetitem3 = self.localVarTableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem3.setText(QCoreApplication.translate("PythonEditor", u"Name \u540d\u7a31", None));
         ___qtablewidgetitem4 = self.localVarTableWidget.horizontalHeaderItem(1)
