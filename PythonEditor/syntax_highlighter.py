@@ -60,7 +60,6 @@ class PythonSyntaxHighlighter(QSyntaxHighlighter):
             format.setFontWeight(QFont.Bold)
         else:
             format.setFontWeight(QFont.Normal)
-        format.setFontFamily("Consolas")
         format.setForeground(Qt.black)
         return format
         

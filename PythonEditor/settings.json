@@ -1,0 +1,74 @@
+{
+    "path": {
+        "python_path": "C:\\Python39\\python.exe",
+        "last_opened_file": "C:/Users/Louis/Documents/Qt/interactive-python-teaching-tool/PythonEditor/testfiles/test.py"
+    },
+    "font": {
+        "all_settings": {
+            "bold": false,
+            "capitalization": "MixedCase",
+            "families": [
+                "Consolas"
+            ],
+            "family": "Consolas",
+            "fixed_pitch": false,
+            "hinting_preference": "PreferDefaultHinting",
+            "italic": false,
+            "kerning": true,
+            "letter_spacing": {
+                "PercentageSpacing": 100
+            },
+            "overline": false,
+            "pixel_size": -1,
+            "point_size": 12,
+            "resolve_mask": 0,
+            "stretch": 100,
+            "strike_out": false,
+            "underline": false,
+            "weight": 400,
+            "word_spacing": 0
+        },
+        "common_settings": {
+            "bold": false,
+            "capitalization": "MixedCase",
+            "families": [
+                "Consolas"
+            ],
+            "family": "Consolas",
+            "fixed_pitch": false,
+            "italic": false,
+            "overline": false,
+            "point_size": 12,
+            "strike_out": false,
+            "underline": false
+        },
+        "ui": {
+            "bold": false,
+            "capitalization": "MixedCase",
+            "families": [
+                "Microsoft JhengHei UI",
+                "Calibri"
+            ],
+            "fixed_pitch": false,
+            "italic": false,
+            "overline": false,
+            "point_size": 12,
+            "strike_out": false,
+            "underline": false
+        },
+        "editor": {
+            "bold": true,
+            "capitalization": "MixedCase",
+            "families": [
+                "Consolas",
+                "Courier New"
+            ],
+            "fixed_pitch": true,
+            "italic": false,
+            "overline": false,
+            "point_size": 12,
+            "strike_out": false,
+            "underline": false
+        }
+    }
+}

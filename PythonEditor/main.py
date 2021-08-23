@@ -1,4 +1,5 @@
 # This Python file uses the following encoding: utf-8
+from types import BuiltinFunctionType, BuiltinMethodType, FunctionType, ModuleType
 from typing import Any
 from PySide6.QtGui import QFont, QFontDatabase, QPalette, QTextCharFormat, QTextCursor, Qt
 from syntax_highlighter import PythonSyntaxHighlighter
@@ -9,8 +10,10 @@ from PySide6.QtWidgets import QApplication, QFileDialog, QInputDialog, QMainWind
 from PySide6.QtCore import QDir, QFile, QTranslator, Slot
 
 from script.analyze_src_code import SourceCodeAnalyzer
+from script.custom_types import ModuleTypeCopy, CustomClassCopy
 
 from ui_pythoneditor import Ui_PythonEditor
+from settings import Settings
 
 class PythonEditor(QWidget):
     def __init__(self):
@@ -19,22 +22,29 @@ class PythonEditor(QWidget):
         self.ui.setupUi(self)
 
         # Setup variables
-        
+
         # Public
-        self.font_size = 12
-        self.font_family = "Fira Code"
-        self.font_weight = QFont.Bold
         
         # Private
-        self._python_path = "C:\\Python39\\python.exe" # C:\\Users\\Louis\\.conda\\envs\\glasses\\python.exe
-        self._filename = ""
+        self._settings = Settings()
+
+        self._filename = self._settings.path["last_opened_file"]
 
         self._current_line, self._last_line = -1, -1 # These numbers are not important
         self._analyzer = None
 
+        # UI text setup
+        # for var_name in dir(self.ui):
+        #     # Find the QWidgets
+        #     var = eval(f"self.ui.{var_name}")
+        #     if issubclass(type(var), QWidget):
+        #         var.setFont(self._settings.font["ui"])
+            
+
+        # Editor text format setup
         self._default_text_edit_format = QTextCharFormat()
         self._default_text_edit_format.setBackground(self.ui.editorEdit.palette().color(QPalette.Base))
-        self._default_text_edit_format.setFont(QFont(self.font_family, self.font_size, self.font_weight))
+        self._default_text_edit_format.setFont(self._settings.font["editor"])
         self._last_plain_text = ""
 
         # Setup buttons
@@ -47,8 +57,12 @@ class PythonEditor(QWidget):
         
         # Setup editor
         self.ui.editorEdit.setFont(self._default_text_edit_format.font())
+        self.ui.editorEdit.textCursor().setBlockCharFormat(self._default_text_edit_format)
         self._highlighter = PythonSyntaxHighlighter(self.ui.editorEdit.document())
         self.ui.editorEdit.textChanged.connect(self.on_text_changed)
+
+        if self._filename != "":
+            self.open(self._filename)
 
         # Setup browser
 
@@ -68,17 +82,18 @@ class PythonEditor(QWidget):
         self.ui.filenameLabel.setText(f"File: {self._filename}")
 
     @Slot()
-    def open(self) -> bool:
-        # Use QFileDialog to get target filename.
-        self._filename, _ = QFileDialog.getOpenFileName(self, 
-            caption="Open file",
-            dir="./",
-            filter="Python Script (*.py)")
-        print(f"Opened file: {self._filename}")
+    def open(self, filename="") -> bool:
+        if not filename: # filename is False if UI button is clicked.
+            # Use QFileDialog to get target filename.
+            self._filename, _ = QFileDialog.getOpenFileName(self, 
+                caption="Open file",
+                dir="./",
+                filter="Python Script (*.py)")
+            print(f"Opened file: {self._filename}")
 
-        # No file selected
-        if self._filename == "":
-            return False
+            # No file selected
+            if self._filename == "":
+                return False
 
         # Display name on label.
         self.ui.filenameLabel.setText(f"File: {self._filename}")
@@ -87,6 +102,10 @@ class PythonEditor(QWidget):
         with open(self._filename, "r", encoding="UTF-8") as file:
             self.ui.editorEdit.setText(file.read())
         
+        # Update the last_opened_file
+        self._settings.path["last_opened_file"] = self._filename
+        self._settings.save()
+
         return True
 
     @Slot()
@@ -126,15 +145,18 @@ class PythonEditor(QWidget):
         if self.save() is False:
             return False
 
-        # Execute, NOTE: The UI will freeze while executing.
-        proc = subprocess.Popen([self._python_path, self._filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        out, err = proc.communicate()
+        # # Execute, NOTE: The UI will freeze while executing.
+        # proc = subprocess.Popen([self._settings.path["python_path"], self._filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        # out, err = proc.communicate()
 
         # Update output QTextBrowser.
-        # NOTE: The encoding of the stdout is to be made clear, right now it seems to be Big5.
-        out = str(out, encoding="Big5")
-        err = str(err, encoding="Big5") if err is not None else ''
-        self.ui.outputTextBrowser.setText(out + err)
+        # # NOTE: The encoding of the stdout is to be made clear, right now it seems to be Big5.
+        # out = str(out, encoding="Big5")
+        # err = str(err, encoding="Big5") if err is not None else ''
+        # self.ui.outputTextBrowser.setText(out + err)
+
+        while self.run_line_by_line():
+            pass
     
     @Slot()
     def run_line_by_line(self) -> bool:
@@ -145,7 +167,7 @@ class PythonEditor(QWidget):
         # Load analyzer if not loaded
         if self._analyzer is None:
             # init variables
-            self._analyzer = SourceCodeAnalyzer(self._filename, python_path=self._python_path)
+            self._analyzer = SourceCodeAnalyzer(self._filename, python_path=self._settings.path["python_path"])
             self._action_no = 0
             self._input_list = []
             # clear output
@@ -269,7 +291,6 @@ class PythonEditor(QWidget):
     #     if self._analyzer is not None:
     #         # TODO
     #         pass
-            
 
     def _move_current_line_highlight(self, current_line_no:int, color=Qt.yellow):
         self._highlight_lines([current_line_no], [self._last_line], color=color, line_no_start=self._analyzer.offset)
@@ -285,8 +306,18 @@ class PythonEditor(QWidget):
 
     def _set_table_row(self, table:QTableWidget, row, var_name:str, var_value:Any):
         table.setItem(row, 0, QTableWidgetItem(var_name))
-        table.setItem(row, 1, QTableWidgetItem(str(var_value)))
-        table.setItem(row, 2, QTableWidgetItem(str(type(var_value))))
+        if type(var_value) in (ModuleTypeCopy, ModuleType):
+            table.setItem(row, 1, QTableWidgetItem("-"))
+            table.setItem(row, 2, QTableWidgetItem("module"))
+        elif type(var_value) == CustomClassCopy:
+            table.setItem(row, 1, QTableWidgetItem("-"))
+            table.setItem(row, 2, QTableWidgetItem(var_value.type_string[8:-2]))
+        elif type(var_value) in (FunctionType, BuiltinFunctionType):
+            table.setItem(row, 1, QTableWidgetItem("-"))
+            table.setItem(row, 2, QTableWidgetItem(str(type(var_value))[8:-2]))
+        else:   
+            table.setItem(row, 1, QTableWidgetItem(str(var_value)))
+            table.setItem(row, 2, QTableWidgetItem(str(type(var_value))[8:-2]))
     
     def _reset_tables(self):
         self.ui.globalVarTableWidget.setRowCount(0)

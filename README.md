@@ -25,7 +25,8 @@
 > ```PYTHON_PATH run.py```
 
 #### Compile UI
-> ```pyside6-uic form.ui > ui_pythoneditor.py```
+> ```pyside6-uic form.ui > ui_pythoneditor.py``` \
+> ```pyside6-rcc resources.qrc -o resources_rc.py```
 
 ## What is this project built with?
 

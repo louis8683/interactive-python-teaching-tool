@@ -34,7 +34,7 @@ class ModuleTypeCopy:
 # with a custom class copy dummy type to not have to import the file when we are
 # analyzing the frames.
 class CustomClassCopy:
-    '''A replacement for custom classes to remove __main__ from the class definition/instances.
+    '''A replacement for custom classes to remove __main__ from the class/func definition/instances.
     Otherwise, we need to import the file we just executed when we load our pickle to analyze.'''
     def __init__(self, obj):
         self.class_name = repr(obj.__class__).split(".")[-1][:-2]
@@ -45,6 +45,7 @@ class CustomClassCopy:
             # This is the class definition, not an instance (<class 'type'>)
             self.hash = None
             self.vars = {}
+        self.type_string = str(type(obj)).replace("__main__.", "")
         
     def __eq__(self, o) -> bool:
         try:
