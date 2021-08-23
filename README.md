@@ -21,10 +21,14 @@
 - Python packages
     - pyside6 (QT for Python)
 
+### Setup
+1. Install the required packages. 
+2. Go into "setting.json" and change the "python_path" to your Python PATH.
+
 ### Run
 > ```PYTHON_PATH run.py```
 
-#### Compile UI
+#### Compile UI (Only need to do this if you've edited the UI)
 > ```pyside6-uic form.ui > ui_pythoneditor.py``` \
 > ```pyside6-rcc resources.qrc -o resources_rc.py```
 
@@ -34,4 +38,4 @@
 
 ## About the Author
 
-#### I'm a graduate student living in Taiwan (ROC) who has some vision about learning programming and learning Computer Science. Coding can be extremely fun, but also extremely exhausting... I believe this tool can help beginners swiftly ascend beyond the frustration of learning programming and go forward with much more confidence!
+#### I'm a graduate student living in Taiwan (ROC) who has some vision about learning programming and learning Computer Science. Coding can be extremely fun, but also extremely exhausting... I believe this tool can help beginners swiftly ascend beyond the frustration of learning programming and go deeper with much more confidence!
