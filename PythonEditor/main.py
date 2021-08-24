@@ -85,23 +85,29 @@ class PythonEditor(QWidget):
     def open(self, filename="") -> bool:
         if not filename: # filename is False if UI button is clicked.
             # Use QFileDialog to get target filename.
-            self._filename, _ = QFileDialog.getOpenFileName(self, 
+            filename, _ = QFileDialog.getOpenFileName(self, 
                 caption="Open file",
                 dir="./",
                 filter="Python Script (*.py)")
-            print(f"Opened file: {self._filename}")
+            print(f"Opening file: {filename}")
 
             # No file selected
-            if self._filename == "":
+            if filename == "":
                 return False
 
-        # Display name on label.
-        self.ui.filenameLabel.setText(f"File: {self._filename}")
+        try:
+            # Open file and display on editor.
+            with open(filename, "r", encoding="UTF-8") as file:
+                self.ui.editorEdit.setText(file.read())
 
-        # Open file and display on editor.
-        with open(self._filename, "r", encoding="UTF-8") as file:
-            self.ui.editorEdit.setText(file.read())
+            # Display name on label.
+            self.ui.filenameLabel.setText(f"File: {filename}")
+        except FileNotFoundError:
+            return False
         
+        # Update filename
+        self._filename = filename
+
         # Update the last_opened_file
         self._settings.path["last_opened_file"] = self._filename
         self._settings.save()
