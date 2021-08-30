@@ -128,15 +128,16 @@ class PythonEditor(QWidget):
     @Slot()
     def save_as(self) -> bool:
         # Use QFileDialog to select new filename
-        self._filename, _ = QFileDialog.getSaveFileName(self,
+        filename, _ = QFileDialog.getSaveFileName(self,
             caption="Save file",
             dir="./",
             filter="Python Script (*.py)")
         
         # No file selected
-        if self._filename == "":
+        if filename == "":
             return False
 
+        self._filename = filename
         # Display name on label.
         self.ui.filenameLabel.setText(f"File: {self._filename}")
         

@@ -21,7 +21,7 @@ class SourceCodeAnalyzer:
         self.offset = line_no_start
         self.src_filename = filename
         self.python_path = python_path
-    
+        
         # Load parser
         self.parser = scp.SourceCodeParser(self.src_filename)
         
