@@ -1,7 +1,4 @@
-answer = 6
-
-while True:
-    i = input("enter a number")
-    if i == answer:
-        break
+li = [0] * 10
+for i in li:
+    print(i)
 

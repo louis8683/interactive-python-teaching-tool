@@ -1,12 +1,12 @@
 # This Python file uses the following encoding: utf-8
 from types import BuiltinFunctionType, BuiltinMethodType, FunctionType, ModuleType
 from typing import Any
-from PySide6.QtGui import QFont, QFontDatabase, QPalette, QTextCharFormat, QTextCursor, Qt
+from PySide6.QtGui import QFont, QFontDatabase, QPalette, QTextBlockFormat, QTextCharFormat, QTextCursor, Qt
 from syntax_highlighter import PythonSyntaxHighlighter
 import subprocess
 import sys
 
-from PySide6.QtWidgets import QApplication, QFileDialog, QInputDialog, QMainWindow, QSlider, QTableWidget, QTableWidgetItem, QWidget, QPushButton
+from PySide6.QtWidgets import QApplication, QFileDialog, QHeaderView, QInputDialog, QMainWindow, QSlider, QStyle, QTableWidget, QTableWidgetItem, QWidget, QPushButton
 from PySide6.QtCore import QDir, QFile, QTranslator, Slot
 
 from script.analyze_src_code import SourceCodeAnalyzer
@@ -27,19 +27,9 @@ class PythonEditor(QWidget):
         
         # Private
         self._settings = Settings()
-
         self._filename = self._settings.path["last_opened_file"]
-
         self._current_line, self._last_line = -1, -1 # These numbers are not important
         self._analyzer = None
-
-        # UI text setup
-        # for var_name in dir(self.ui):
-        #     # Find the QWidgets
-        #     var = eval(f"self.ui.{var_name}")
-        #     if issubclass(type(var), QWidget):
-        #         var.setFont(self._settings.font["ui"])
-            
 
         # Editor text format setup
         self._default_text_edit_format = QTextCharFormat()
@@ -160,7 +150,7 @@ class PythonEditor(QWidget):
         # # NOTE: The encoding of the stdout is to be made clear, right now it seems to be Big5.
         # out = str(out, encoding="Big5")
         # err = str(err, encoding="Big5") if err is not None else ''
-        # self.ui.outputTextBrowser.setText(out + err)
+        # self.ui.outputBrowser.setText(out + err)
 
         while self.run_line_by_line():
             pass
@@ -178,7 +168,7 @@ class PythonEditor(QWidget):
             self._action_no = 0
             self._input_list = []
             # clear output
-            self.ui.outputTextBrowser.clear()
+            self.ui.outputBrowser.clear()
             # setup slider
             self.ui.stepSlider.setMaximum(len(self._analyzer.actions))
             print(self._analyzer.actions)
@@ -243,20 +233,20 @@ class PythonEditor(QWidget):
 
         # Update variables
         vars = self._analyzer.get_variables(record_no)
-        self.ui.globalVarTableWidget.setRowCount(len(vars["global"]))
-        self.ui.globalVarTableWidget.setColumnCount(3)
+        self.ui.globalVarTable.setRowCount(len(vars["global"]))
+        self.ui.globalVarTable.setColumnCount(3)
         for i, var_name in enumerate(vars["global"]):
-            self._set_table_row(self.ui.globalVarTableWidget, i, var_name, vars["global"][var_name])
+            self._set_table_row(self.ui.globalVarTable, i, var_name, vars["global"][var_name])
             if ("g_added" in events and var_name in events["g_added"]) \
                     or ("g_changed" in events and var_name in events["g_changed"]):
-                self._hightlight_row(self.ui.globalVarTableWidget, i)
-        self.ui.localVarTableWidget.setRowCount(len(vars["local"]))
-        self.ui.localVarTableWidget.setColumnCount(3)
+                self._hightlight_row(self.ui.globalVarTable, i)
+        self.ui.localVarTable.setRowCount(len(vars["local"]))
+        self.ui.localVarTable.setColumnCount(3)
         for i, var_name in enumerate(vars["local"]):
-            self._set_table_row(self.ui.localVarTableWidget, i, var_name, vars["local"][var_name])
+            self._set_table_row(self.ui.localVarTable, i, var_name, vars["local"][var_name])
             if ("l_added" in events and var_name in events["l_added"]) \
                     or ("l_changed" in events and var_name in events["l_changed"]):
-                self._hightlight_row(self.ui.localVarTableWidget, i)
+                self._hightlight_row(self.ui.localVarTable, i)
         
         # Increment action no
         self._action_no += 1
@@ -304,7 +294,7 @@ class PythonEditor(QWidget):
         self._last_line = current_line_no
 
     def _write_to_output(self, msg:str, format:QTextCharFormat=None):
-        cursor = QTextCursor(self.ui.outputTextBrowser.document())
+        cursor = QTextCursor(self.ui.outputBrowser.document())
         cursor.movePosition(QTextCursor.End)
         if format:
             cursor.insertText(msg, format)
@@ -327,10 +317,10 @@ class PythonEditor(QWidget):
             table.setItem(row, 2, QTableWidgetItem(str(type(var_value))[8:-2]))
     
     def _reset_tables(self):
-        self.ui.globalVarTableWidget.setRowCount(0)
-        self.ui.globalVarTableWidget.setColumnCount(0)
-        self.ui.localVarTableWidget.setRowCount(0)
-        self.ui.localVarTableWidget.setColumnCount(0)
+        self.ui.globalVarTable.setRowCount(0)
+        self.ui.globalVarTable.setColumnCount(0)
+        self.ui.localVarTable.setRowCount(0)
+        self.ui.localVarTable.setColumnCount(0)
     
     def _line_by_line_clean_up(self):
         self._remove_highlights()

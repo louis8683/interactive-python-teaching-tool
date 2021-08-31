@@ -1,0 +1,1359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PythonEditor</class>
+ <widget class="QWidget" name="PythonEditor">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1066</width>
+    <height>853</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QFrame" name="mainFrame">
+     <property name="styleSheet">
+      <string notr="true">QFrame {
+	background-color: #D9D9D9;
+}
+
+QLabel {
+	font-family: &quot;Calibri&quot;;
+	font-size: 16px;
+	color: #969696;
+	margin-left: 10px;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QFrame" name="toolbarFrame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>10</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QFrame" name="primaryButtonsFrame">
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+	border: 1px solid #D9D9D9;
+	padding-left: 10px;
+	padding-right: 10px;
+	height: 30px;
+	margin-left: 0px;
+	margin-right: 0px;
+
+	background-color: #FFFFFF;
+	font-family: &quot;Calibri&quot;;
+	font-size: 16px;
+}
+
+QPushButton:hover {
+	background-color: #CCE8FF;
+}
+
+QPushButton:pressed  { 
+	background-color: #008FFF; 
+}</string>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>10</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="newButton">
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}</string>
+              </property>
+              <property name="text">
+               <string>New</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/icons/note_add_black_24dp.svg</normaloff>:/icons/icons/note_add_black_24dp.svg</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="openButton">
+              <property name="text">
+               <string>Open</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/icons/source_black_24dp.svg</normaloff>:/icons/icons/source_black_24dp.svg</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="saveButton">
+              <property name="text">
+               <string>Save</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/icons/save_black_24dp.svg</normaloff>:/icons/icons/save_black_24dp.svg</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="saveAsButton">
+              <property name="text">
+               <string>Save as</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/icons/save_black_24dp.svg</normaloff>:/icons/icons/save_black_24dp.svg</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="runButton">
+              <property name="text">
+               <string>Run</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/icons/play_circle_black_24dp.svg</normaloff>:/icons/icons/play_circle_black_24dp.svg</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="lineByLineButton">
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}</string>
+              </property>
+              <property name="text">
+               <string>Line-by-Line</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/icons/playlist_play_black_24dp.svg</normaloff>:/icons/icons/playlist_play_black_24dp.svg</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>750</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QFrame" name="lineByLineFrame">
+           <property name="styleSheet">
+            <string notr="true">QFrame {
+	max-width: 340px;
+}</string>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>10</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="lastButton">
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	border: 1px solid #D9D9D9;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	min-width: 32px;
+	max-width: 32px;
+	height: 30px;
+	margin-left: 0px;
+	margin-right: 0px;
+
+	background-color: #FFFFFF;
+	font-family: &quot;Calibri&quot;;
+	font-size: 16px;
+}
+
+QPushButton:hover {
+	background-color: #CCE8FF;
+}
+
+QPushButton:pressed  { 
+	background-color: #008FFF; 
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/icons/fast_rewind_black_24dp.svg</normaloff>:/icons/icons/fast_rewind_black_24dp.svg</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="stepButton">
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	border: 1px solid #D9D9D9;
+	height: 30px;
+	max-width: 90px;
+	min-width: 90px;
+	margin-left: 0px;
+	margin-right: 0px;
+
+	background-color: #FFFFFF;
+	font-family: &quot;Calibri&quot;;
+	font-size: 16px;
+}
+
+QPushButton:pressed  { 
+	background-color: #008FFF; 
+}</string>
+              </property>
+              <property name="text">
+               <string>999 / 999</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="nextButton">
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	border: 1px solid #D9D9D9;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;	
+	min-width: 32px;
+	max-width: 32px;
+	height: 30px;
+	margin-left: 0px;
+	margin-right: 20px;
+
+	background-color: #FFFFFF;
+	font-family: &quot;Calibri&quot;;
+	font-size: 16px;
+}
+
+QPushButton:hover {
+	background-color: #CCE8FF;
+}
+
+QPushButton:pressed  { 
+	background-color: #008FFF; 
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/icons/fast_forward_black_24dp.svg</normaloff>:/icons/icons/fast_forward_black_24dp.svg</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="stepSlider">
+              <property name="styleSheet">
+               <string notr="true">QSlider {
+	min-width: 50px;
+	max-width: 150px;
+}</string>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="filenameLabel">
+        <property name="styleSheet">
+         <string notr="true">QLabel {
+	margin-left: 20px;
+	color: #969696;
+	min-height: 20px;
+	max-height: 20px;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Filename: No file opened yet.</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="editorInfoFrame">
+        <property name="styleSheet">
+         <string notr="true">QSplitter::handle {
+	background-color: #CCCCCC;
+}
+
+QSplitter::handle:pressed {
+}</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_13">
+         <property name="leftMargin">
+          <number>10</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>10</number>
+         </property>
+         <property name="bottomMargin">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QSplitter" name="splitter">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="handleWidth">
+            <number>1</number>
+           </property>
+           <property name="childrenCollapsible">
+            <bool>false</bool>
+           </property>
+           <widget class="QFrame" name="editorConsoleFrame">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>10</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QSplitter" name="editorSplitter">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="handleWidth">
+                <number>1</number>
+               </property>
+               <property name="childrenCollapsible">
+                <bool>false</bool>
+               </property>
+               <widget class="QFrame" name="editorFrame">
+                <property name="styleSheet">
+                 <string notr="true">QFrame {
+	border-radius: 20px;
+	background-color: #FFFFFF;
+	margin-bottom: 10px;
+}</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_6">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>10</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>12</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>5</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QTextBrowser" name="editorLineNoBrowser">
+                   <property name="styleSheet">
+                    <string notr="true">QTextBrowser {
+
+	min-width: 40px;
+	max-width: 40px;
+}</string>
+                   </property>
+                   <property name="lineWrapMode">
+                    <enum>QTextEdit::NoWrap</enum>
+                   </property>
+                   <property name="html">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'PMingLiU'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:19px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;1&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;2&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;3&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;4&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;5&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;6&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;7&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;8&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;99&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;111&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="textInteractionFlags">
+                    <set>Qt::NoTextInteraction</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QTextEdit" name="editorEdit">
+                   <property name="lineWrapMode">
+                    <enum>QTextEdit::NoWrap</enum>
+                   </property>
+                   <property name="html">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'PMingLiU'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:19px; background-color:#1e1e1e;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#c586c0;&quot;&gt;from&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;PySide6&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QtGui&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#c586c0;&quot;&gt;import&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QIcon&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#c586c0;&quot;&gt;from&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;PySide6&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QtWidgets&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#c586c0;&quot;&gt;import&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QApplication&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QFrame&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QHBoxLayout&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QLabel&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QMainWindow&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QPushButton&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QSizePolicy&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QSpacerItem&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QWidget&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#c586c0;&quot;&gt;from&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;ToolbarItem&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#c586c0;&quot;&gt;import&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;ToolbarItem&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#c586c0;&quot;&gt;from&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;resources_rc&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#c586c0;&quot;&gt;import&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; *&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#c586c0;&quot;&gt;import&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;sys&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#569cd6;&quot;&gt;class&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;Toolbar&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QWidget&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;):&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#569cd6;&quot;&gt;def&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;__init__&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;scale&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;=&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#b5cea8;&quot;&gt;1&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;):&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;super&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;Toolbar&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;).&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;__init__&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;()&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;icons&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;: &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;list&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;[&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;str&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QIcon&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;] = [&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;            (&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;New&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QIcon&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;:/icons/icons/note_add_black_24dp.svg&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;)),&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;            (&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;Open&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QIcon&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;:/icons/icons/source_black_24dp.svg&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;)),&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;            (&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;Save&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QIcon&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;:/icons/icons/save_black_24dp.svg&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;)),&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;            (&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;Save as&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QIcon&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;:/icons/icons/save_black_24dp.svg&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;)),&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;            (&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;Run&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QIcon&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;:/icons/icons/play_circle_black_24dp.svg&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;)),&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;            (&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;Line-by-Line&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QIcon&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;:/icons/icons/playlist_play_black_24dp.svg&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;)),&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;            (&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;Last&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QIcon&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;:/icons/icons/fast_rewind_black_24dp.svg&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;)),&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;            (&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;Next&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QIcon&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;:/icons/icons/fast_forward_black_24dp.svg&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;)),&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        ]&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;items&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;: &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;dict&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;[&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;str&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;ToolbarItem&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;] = {}&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#6a9955;&quot;&gt;# Setup H layout&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;horizontalLayout&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; = &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QHBoxLayout&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;horizontalLayout&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;setSpacing&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#b5cea8;&quot;&gt;0&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;horizontalLayout&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;setContentsMargins&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#b5cea8;&quot;&gt;0&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;,&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#b5cea8;&quot;&gt;0&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;,&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#b5cea8;&quot;&gt;0&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;,&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#b5cea8;&quot;&gt;0&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;min_width&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; = &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#b5cea8;&quot;&gt;0&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;max_height&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; = &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#b5cea8;&quot;&gt;0&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#c586c0;&quot;&gt;for&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;name&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;icon&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#c586c0;&quot;&gt;in&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;icons&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;[:-&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#b5cea8;&quot;&gt;2&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;]:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;            &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;items&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;[&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;name&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;] = &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;ToolbarItem&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;name&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;icon&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;scale&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;            &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;horizontalLayout&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;addWidget&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;items&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;[&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;name&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;])&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;            &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;min_width&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; += &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;items&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;[&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;name&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;].&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;width&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;()&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;            &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;max_height&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; = &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;max&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;max_height&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;items&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;[&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;name&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;].&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;height&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;())&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;horizontalLayout&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;addItem&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QSpacerItem&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#b5cea8;&quot;&gt;100&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#b5cea8;&quot;&gt;0&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QSizePolicy&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;Expanding&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QSizePolicy&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;Minimum&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;))&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#c586c0;&quot;&gt;for&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;name&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;icon&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#c586c0;&quot;&gt;in&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;icons&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;[-&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#b5cea8;&quot;&gt;2&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;:]:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;            &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;items&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;[&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;name&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;] = &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;ToolbarItem&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;name&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;icon&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;scale&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;            &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;horizontalLayout&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;addWidget&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;items&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;[&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;name&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;])&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;            &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;min_width&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; += &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;items&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;[&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;name&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;].&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;width&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;()&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;            &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;max_height&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; = &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;max&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;max_height&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;items&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;[&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;name&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;].&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;height&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;())&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#6a9955;&quot;&gt;# Set dimensions&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;margin&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; = &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#b5cea8;&quot;&gt;10&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;setFixedHeight&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;max_height&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;        &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;setMinimumWidth&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;min_width&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; + &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;margin&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; * &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;self&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;horizontalLayout&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;count&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;())&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#c586c0;&quot;&gt;if&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; __name__ == &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#ce9178;&quot;&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;:    &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;app&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; = &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;QApplication&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;([])&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;toolbar&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt; = &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;Toolbar&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;()&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;toolbar&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;show&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;()&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#4ec9b0;&quot;&gt;sys&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;exit&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#9cdcfe;&quot;&gt;app&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#dcdcaa;&quot;&gt;exec&lt;/span&gt;&lt;span style=&quot; font-family:'Fira Code Medium,Consolas,Courier New,monospace,Consolas,Courier New,monospace'; font-size:14px; color:#d4d4d4;&quot;&gt;())&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QFrame" name="consoleFrame">
+                <property name="styleSheet">
+                 <string notr="true">QLabel {
+	margin-top: 5px;
+}</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_7">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>5</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>5</number>
+                 </property>
+                 <item>
+                  <widget class="QSplitter" name="consoleSplitter">
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="handleWidth">
+                    <number>1</number>
+                   </property>
+                   <property name="childrenCollapsible">
+                    <bool>false</bool>
+                   </property>
+                   <widget class="QFrame" name="outputFrame">
+                    <property name="styleSheet">
+                     <string notr="true">QFrame {
+	background-color: #FFFFFF;
+	border-radius: 20px;
+	margin-right: 10px;
+}</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_6">
+                     <property name="spacing">
+                      <number>4</number>
+                     </property>
+                     <property name="leftMargin">
+                      <number>5</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>5</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>5</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>5</number>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="outputLabel">
+                       <property name="text">
+                        <string>OUTPUT</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QFrame" name="outputSeparateLine">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">QFrame {
+	background-color: #D9D9D9;
+	margin-left: 10px;
+	margin-right: 10px;
+	min-height: 1px;
+	maz-height: 1px;
+}</string>
+                       </property>
+                       <property name="frameShape">
+                        <enum>QFrame::StyledPanel</enum>
+                       </property>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QFrame" name="outputTextFrame">
+                       <property name="styleSheet">
+                        <string notr="true">QFrame {
+	margin: 0px;
+}</string>
+                       </property>
+                       <property name="frameShape">
+                        <enum>QFrame::StyledPanel</enum>
+                       </property>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
+                       </property>
+                       <layout class="QHBoxLayout" name="horizontalLayout_8">
+                        <property name="spacing">
+                         <number>0</number>
+                        </property>
+                        <property name="leftMargin">
+                         <number>5</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>0</number>
+                        </property>
+                        <item>
+                         <widget class="QTextBrowser" name="outputLineNoBrowser">
+                          <property name="styleSheet">
+                           <string notr="true">QTextBrowser {
+	min-width: 40px;
+	max-width: 40px;
+}</string>
+                          </property>
+                          <property name="lineWrapMode">
+                           <enum>QTextEdit::NoWrap</enum>
+                          </property>
+                          <property name="html">
+                           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'PMingLiU'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:19px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;1&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;2&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;3&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;4&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;5&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;6&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;7&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;8&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;99&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;111&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                          </property>
+                          <property name="textInteractionFlags">
+                           <set>Qt::NoTextInteraction</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QTextBrowser" name="outputBrowser">
+                          <property name="styleSheet">
+                           <string notr="true">QTextBrowser {
+	margin-left: 0px;
+	margin-right: 0px;
+}</string>
+                          </property>
+                          <property name="lineWrapMode">
+                           <enum>QTextEdit::NoWrap</enum>
+                          </property>
+                          <property name="html">
+                           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'PMingLiU'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                   <widget class="QFrame" name="inputFrame">
+                    <property name="styleSheet">
+                     <string notr="true">QFrame {
+	background-color: #FFFFFF;
+	border-radius: 20px;
+	margin-left: 10px;
+}</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_5">
+                     <property name="leftMargin">
+                      <number>5</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>5</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>5</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>5</number>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="inputLabel">
+                       <property name="text">
+                        <string>INPUT</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QFrame" name="inputSeparateLine">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">QFrame {
+	background-color: #D9D9D9;
+	margin-left: 10px;
+	margin-right: 10px;
+	min-height: 1px;
+	maz-height: 1px;
+}</string>
+                       </property>
+                       <property name="frameShape">
+                        <enum>QFrame::StyledPanel</enum>
+                       </property>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QFrame" name="inputTextFrame">
+                       <property name="styleSheet">
+                        <string notr="true">QFrame {
+	margin: 0px;
+}</string>
+                       </property>
+                       <property name="frameShape">
+                        <enum>QFrame::StyledPanel</enum>
+                       </property>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
+                       </property>
+                       <layout class="QHBoxLayout" name="horizontalLayout_7">
+                        <property name="spacing">
+                         <number>0</number>
+                        </property>
+                        <property name="leftMargin">
+                         <number>5</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>0</number>
+                        </property>
+                        <item>
+                         <widget class="QTextBrowser" name="inputLineNoBrowser">
+                          <property name="styleSheet">
+                           <string notr="true">QTextBrowser {
+	min-width: 40px;
+	max-width: 40px;
+}</string>
+                          </property>
+                          <property name="lineWrapMode">
+                           <enum>QTextEdit::NoWrap</enum>
+                          </property>
+                          <property name="html">
+                           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'PMingLiU'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:19px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;1&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;2&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;3&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;4&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;5&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;6&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;7&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;8&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;99&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:14pt;&quot;&gt;111&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                          </property>
+                          <property name="textInteractionFlags">
+                           <set>Qt::NoTextInteraction</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QTextBrowser" name="inputBrowser">
+                          <property name="lineWrapMode">
+                           <enum>QTextEdit::NoWrap</enum>
+                          </property>
+                          <property name="html">
+                           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'PMingLiU'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QFrame" name="infoFrame">
+            <property name="styleSheet">
+             <string notr="true">QWidget {
+	font-family: &quot;Calibri&quot;;
+	font-size: 12px;
+}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <property name="leftMargin">
+              <number>10</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QSplitter" name="splitter_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="handleWidth">
+                <number>1</number>
+               </property>
+               <widget class="QFrame" name="globalVarFrame">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_9">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>5</number>
+                 </property>
+                 <item>
+                  <widget class="QFrame" name="globalVarLabelFrame">
+                   <property name="styleSheet">
+                    <string notr="true">QFrame {
+	background-color: #FFF5C5;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;	
+}</string>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_16">
+                    <item>
+                     <widget class="QLabel" name="globalVarLabel">
+                      <property name="text">
+                       <string>Global Variables</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="globalVarTableFrame">
+                   <property name="styleSheet">
+                    <string notr="true">QFrame {
+	background-color: #FFFFFF;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;	
+}</string>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_15">
+                    <item>
+                     <widget class="QTableWidget" name="globalVarTable">
+                      <property name="gridStyle">
+                       <enum>Qt::NoPen</enum>
+                      </property>
+                      <attribute name="horizontalHeaderStretchLastSection">
+                       <bool>true</bool>
+                      </attribute>
+                      <attribute name="verticalHeaderVisible">
+                       <bool>false</bool>
+                      </attribute>
+                      <row>
+                       <property name="text">
+                        <string>New Row</string>
+                       </property>
+                      </row>
+                      <row>
+                       <property name="text">
+                        <string>New Row</string>
+                       </property>
+                      </row>
+                      <column>
+                       <property name="text">
+                        <string>Name</string>
+                       </property>
+                      </column>
+                      <column>
+                       <property name="text">
+                        <string>Value</string>
+                       </property>
+                      </column>
+                      <column>
+                       <property name="text">
+                        <string>Type</string>
+                       </property>
+                      </column>
+                      <item row="0" column="0">
+                       <property name="text">
+                        <string>name</string>
+                       </property>
+                      </item>
+                      <item row="0" column="1">
+                       <property name="text">
+                        <string>&quot;Louis&quot;</string>
+                       </property>
+                      </item>
+                      <item row="0" column="2">
+                       <property name="text">
+                        <string>str</string>
+                       </property>
+                      </item>
+                      <item row="1" column="0">
+                       <property name="text">
+                        <string>li</string>
+                       </property>
+                      </item>
+                      <item row="1" column="1">
+                       <property name="text">
+                        <string>[1,2,3,4,5,6,7,8,9,0]</string>
+                       </property>
+                      </item>
+                      <item row="1" column="2">
+                       <property name="text">
+                        <string>list</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QFrame" name="localVarFrame">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_10">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>5</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>5</number>
+                 </property>
+                 <item>
+                  <widget class="QFrame" name="localVarLabelFrame">
+                   <property name="styleSheet">
+                    <string notr="true">QFrame {
+	background-color: #DDF1B2;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;	
+}</string>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_20">
+                    <item>
+                     <widget class="QLabel" name="localVarLabel">
+                      <property name="text">
+                       <string>Local Variables</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="localVarTableFrame">
+                   <property name="styleSheet">
+                    <string notr="true">QFrame {
+	background-color: #FFFFFF;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;	
+}</string>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_19">
+                    <item>
+                     <widget class="QTableWidget" name="localVarTable">
+                      <property name="gridStyle">
+                       <enum>Qt::NoPen</enum>
+                      </property>
+                      <attribute name="horizontalHeaderStretchLastSection">
+                       <bool>true</bool>
+                      </attribute>
+                      <attribute name="verticalHeaderVisible">
+                       <bool>false</bool>
+                      </attribute>
+                      <column>
+                       <property name="text">
+                        <string>Name</string>
+                       </property>
+                      </column>
+                      <column>
+                       <property name="text">
+                        <string>Value</string>
+                       </property>
+                      </column>
+                      <column>
+                       <property name="text">
+                        <string>Type</string>
+                       </property>
+                      </column>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QFrame" name="callStackFrame">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_8">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>5</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QFrame" name="callStackLabelFrame">
+                   <property name="styleSheet">
+                    <string notr="true">QFrame {
+	background-color: #C3F1F6;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;	
+}</string>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_18">
+                    <item>
+                     <widget class="QLabel" name="callStackVarLabel">
+                      <property name="text">
+                       <string>Function Call Stack</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="callStackTableFrame">
+                   <property name="styleSheet">
+                    <string notr="true">QFrame {
+	background-color: #FFFFFF;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;	
+}</string>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_17">
+                    <item>
+                     <widget class="QTableWidget" name="callStackTable"/>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

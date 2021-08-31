@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icons">
+    <file>icons/fast_forward_black_24dp.svg</file>
+    <file>icons/fast_rewind_black_24dp.svg</file>
     <file>icons/library_add_black_24dp.svg</file>
     <file>icons/note_add_black_24dp.svg</file>
     <file>icons/play_circle_black_24dp.svg</file>
