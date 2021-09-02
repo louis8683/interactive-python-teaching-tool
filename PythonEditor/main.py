@@ -1,4 +1,5 @@
 # This Python file uses the following encoding: utf-8
+from copy import copy, deepcopy
 from types import BuiltinFunctionType, BuiltinMethodType, FunctionType, ModuleType
 from typing import Any
 from PySide6.QtGui import QFont, QFontDatabase, QPalette, QTextBlockFormat, QTextCharFormat, QTextCursor, Qt
@@ -6,7 +7,7 @@ from syntax_highlighter import PythonSyntaxHighlighter
 import subprocess
 import sys
 
-from PySide6.QtWidgets import QApplication, QFileDialog, QHeaderView, QInputDialog, QMainWindow, QSlider, QStyle, QTableWidget, QTableWidgetItem, QWidget, QPushButton
+from PySide6.QtWidgets import QApplication, QFileDialog, QHeaderView, QInputDialog, QMainWindow, QSlider, QStyle, QTableWidget, QTableWidgetItem, QTextBrowser, QTextEdit, QWidget, QPushButton
 from PySide6.QtCore import QDir, QFile, QTranslator, Slot
 
 from script.analyze_src_code import SourceCodeAnalyzer
@@ -21,22 +22,24 @@ class PythonEditor(QWidget):
         self.ui = Ui_PythonEditor()
         self.ui.setupUi(self)
 
-        # Setup variables
+        # SETUP: PRIVATE
 
-        # Public
-        
-        # Private
         self._settings = Settings()
         self._filename = self._settings.path["last_opened_file"]
         self._current_line, self._last_line = -1, -1 # These numbers are not important
         self._analyzer = None
 
-        # Editor text format setup
-        self._default_text_edit_format = QTextCharFormat()
-        self._default_text_edit_format.setBackground(self.ui.editorEdit.palette().color(QPalette.Base))
-        self._default_text_edit_format.setFont(self._settings.font["editor"])
-        self._last_plain_text = ""
+        # Default char format setup (for QTextEdit and QTextBrowser).
+        self._default_char_format = QTextCharFormat()
+        self._default_char_format.setBackground(self.ui.editorEdit.palette().color(QPalette.Base))
+        self._default_char_format.setFont(self._settings.font["editor"])
 
+        # Default block format setup (for QTextEdit and QTextBrowser).
+        self._default_block_format = QTextBlockFormat()
+        self._default_block_format.setLineHeight(30, QTextBlockFormat.FixedHeight) # TODO: use settings
+
+        self._last_plain_text = ""
+        
         # Setup buttons
         self.ui.newButton.clicked.connect(self.new_document)
         self.ui.openButton.clicked.connect(self.open)
@@ -46,19 +49,94 @@ class PythonEditor(QWidget):
         self.ui.lineByLineButton.clicked.connect(self.run_line_by_line)
         
         # Setup editor
-        self.ui.editorEdit.setFont(self._default_text_edit_format.font())
-        self.ui.editorEdit.textCursor().setBlockCharFormat(self._default_text_edit_format)
         self._highlighter = PythonSyntaxHighlighter(self.ui.editorEdit.document())
         self.ui.editorEdit.textChanged.connect(self.on_text_changed)
-
+        
+        self.ui.editorEdit.setFont(self._default_char_format.font())
+        self.ui.editorEdit.setCurrentCharFormat(self._default_char_format)
+        self._set_block_format(self.ui.editorEdit)
+        self._set_char_format(self.ui.editorEdit)
+        
         if self._filename != "":
             self.open(self._filename)
 
-        # Setup browser
+        # Setup console browsers.
+        self._set_block_format(self.ui.inputBrowser)
+        self._set_char_format(self.ui.inputBrowser)
+
+        self.ui.outputBrowser.setFont(self._default_char_format.font())
+        self.ui.outputBrowser.setCurrentFont(self._default_char_format.font())
+        self._set_block_format(self.ui.outputBrowser)
+        self._set_char_format(self.ui.outputBrowser)
+
+        # Setup line-no browsers.
+        line_no_char_format = copy(self._default_char_format)
+        line_no_char_format.setForeground(Qt.gray) # TODO: Change to BG color in settings.
+        self._set_block_format(self.ui.editorLineNoBrowser)
+        self._set_char_format(self.ui.editorLineNoBrowser, format=line_no_char_format)
+        self._set_block_format(self.ui.outputLineNoBrowser)
+        self._set_char_format(self.ui.outputLineNoBrowser, format=line_no_char_format)
+        self._set_block_format(self.ui.inputLineNoBrowser)
+        self._set_char_format(self.ui.inputLineNoBrowser, format=line_no_char_format)
+
+        # Connect the scroll of line no.
+        self.ui.editorLineNoBrowser.verticalScrollBar().valueChanged.connect(
+            Slot()(lambda _: self.ui.editorEdit.verticalScrollBar().setValue(
+                self.ui.editorLineNoBrowser.verticalScrollBar().value())))
+        self.ui.editorEdit.verticalScrollBar().valueChanged.connect(
+            Slot()(lambda _: self.ui.editorLineNoBrowser.verticalScrollBar().setValue(
+                self.ui.editorEdit.verticalScrollBar().value())))
+        self.ui.outputLineNoBrowser.verticalScrollBar().valueChanged.connect(
+            Slot()(lambda _: self.ui.outputBrowser.verticalScrollBar().setValue(
+                self.ui.outputLineNoBrowser.verticalScrollBar().value())))
+        self.ui.outputBrowser.verticalScrollBar().valueChanged.connect(
+            Slot()(lambda _: self.ui.outputLineNoBrowser.verticalScrollBar().setValue(
+                self.ui.outputBrowser.verticalScrollBar().value())))
+        self.ui.inputLineNoBrowser.verticalScrollBar().valueChanged.connect(
+            Slot()(lambda _: self.ui.inputBrowser.verticalScrollBar().setValue(
+                self.ui.inputLineNoBrowser.verticalScrollBar().value())))
+        self.ui.inputBrowser.verticalScrollBar().valueChanged.connect(
+            Slot()(lambda _: self.ui.inputLineNoBrowser.verticalScrollBar().setValue(
+                self.ui.inputBrowser.verticalScrollBar().value())))
+        # Scroll to value 0.
+        self.ui.editorLineNoBrowser.verticalScrollBar().setValue(0)
+        self.ui.editorEdit.verticalScrollBar().setValue(0)
+        self.ui.outputLineNoBrowser.verticalScrollBar().setValue(0)
+        self.ui.outputBrowser.verticalScrollBar().setValue(0)
+        self.ui.inputLineNoBrowser.verticalScrollBar().setValue(0)
+        self.ui.inputBrowser.verticalScrollBar().setValue(0)
+        
+        self._set_block_format
+        line = 0
+        self._set_char_format(self.ui.editorEdit)
+        block = self.ui.editorEdit.document().findBlockByLineNumber(line)
+        cursor = QTextCursor(block)
+        cursor.select(QTextCursor.BlockUnderCursor)
+        print(cursor.charFormat().font())
+        print(cursor.selectedText())
+        cursor.setCharFormat(self._default_char_format)
+        print(cursor.charFormat().font())
+        print(line, block.charFormat().font())
+        print(block.text())
 
         # Setup slider
         # self.ui.stepSlider.sliderMoved.connect(self.on_slider_moved)
 
+    # SETUP FUNCTIONS
+
+    def _set_block_format(self, widget: QTextEdit, format:QTextBlockFormat=None):
+        cursor = widget.textCursor()
+        cursor.select(QTextCursor.Document)
+        format = self._default_block_format if format is None else format
+        cursor.setBlockFormat(format)
+    
+    def _set_char_format(self, widget: QTextEdit, format:QTextCharFormat=None):
+        cursor = widget.textCursor()
+        cursor.select(QTextCursor.Document)        
+        format = self._default_char_format if format is None else format
+        cursor.setCharFormat(format)
+
+    # SLOT FUNCTIONS    
 
     @Slot()
     def new_document(self):
@@ -89,6 +167,9 @@ class PythonEditor(QWidget):
             # Open file and display on editor.
             with open(filename, "r", encoding="UTF-8") as file:
                 self.ui.editorEdit.setText(file.read())
+                # NOTE: have to reset the format after setText().
+                self._set_block_format(self.ui.editorEdit)
+                self._set_char_format(self.ui.editorEdit)
 
             # Display name on label.
             self.ui.filenameLabel.setText(f"File: {filename}")
@@ -215,7 +296,7 @@ class PythonEditor(QWidget):
             error = events["error"]
             error_msg = f"{str(type(error))[8:-2]}: {str(error)}"
             # Write to output window.
-            format = QTextCharFormat()
+            format = copy(self._default_char_format)
             format.setForeground(Qt.red)
             self._write_to_output(error_msg, format)
 
@@ -280,7 +361,8 @@ class PythonEditor(QWidget):
                 self._action_no = len(self._analyzer.actions)
                 self.run_line_by_line()
                 # Set the cursor format to the default input format (remove highlights etc.)
-                self.ui.editorEdit.textCursor().setBlockCharFormat(self._default_text_edit_format)
+                self.ui.editorEdit.textCursor().setCharFormat(self._default_char_format)
+                self.ui.editorEdit.textCursor().setBlockCharFormat(self._default_block_format)
     
     # @Slot()
     # def on_slider_moved(self):
@@ -300,6 +382,8 @@ class PythonEditor(QWidget):
             cursor.insertText(msg, format)
         else:
             cursor.insertText(msg)
+        # NOTE: have to reset the block format.
+        self._set_block_format(self.ui.outputBrowser)
 
     def _set_table_row(self, table:QTableWidget, row, var_name:str, var_value:Any):
         table.setItem(row, 0, QTableWidgetItem(var_name))
@@ -340,11 +424,11 @@ class PythonEditor(QWidget):
                 block = self.ui.editorEdit.document().findBlockByLineNumber(line - line_no_start)
                 cursor = QTextCursor(block)
                 cursor.select(cursor.LineUnderCursor)
+                # NOTE: Line 0 will have the QTextChar of the QTextEdit.
+                format = copy(self._default_char_format)
                 if line in highlight:
-                    format = block.charFormat()
                     format.setBackground(color)
                 else:
-                    format = block.charFormat()
                     palette = self.ui.editorEdit.palette()
                     format.setBackground(palette.color(QPalette.Base))
                 cursor.setCharFormat(format)

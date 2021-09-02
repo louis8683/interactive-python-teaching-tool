@@ -108,7 +108,7 @@ class PythonSyntaxHighlighter(QSyntaxHighlighter):
     def highlight_string(self, text, color=Qt.darkRed, f_color=Qt.blue):
         format = self.base_format()
         format.setForeground(color)
-        f_format = self.base_format()
+        f_format = self.base_format() # for the "f" of f-strings
         f_format.setForeground(f_color)
         double_quote_pos = []
         single_quote_pos = []
